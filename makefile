@@ -5,21 +5,21 @@ INCLUDES = -Isrc/
 # Directories inside src that we should look in for compilation
 DIRS = 
 # Object files, by keeping the directory structure from src/ in obj/
-OBJS = $(patsubst src/%.c,obj/%.o, $(wildcard src/*.c) $(foreach d, $(DIRS), $(wildcard src/$(d)/*.c)))
+OBJS = $(patsubst src/%.cpp,obj/%.o, $(wildcard src/*.cpp) $(foreach d, $(DIRS), $(wildcard src/$(d)/*.cpp)))
 
 # Our compiler
-CXX = gcc
+CXX = g++
 # initialize $PLATFORM_LIBS to blank so the platform-specfic section can fill it in later
 PLATFORM_LIBS = 
 # Warnings
 WARNINGS = -Wall -Wextra
 # compiler features
 FEATURES =
-CFLAGS = -std=c11 -O -g -march=native $(WARNINGS) $(FEATURES)
+CFLAGS = -O -g -march=native $(WARNINGS) $(FEATURES)
 
 # Handle platform-specific setup
 ifeq ($(MACHINE), Darwin)
-	CXX = clang
+	CXX = clang++
 	PLATFORM_LIBS = 
 endif
 
@@ -34,7 +34,7 @@ main: dirs $(OBJS)
 	$(CXX) $(CFLAGS) -o $(EXEC) $(OBJS) $(LIBS)
 
 # Compile for each thing
-obj/%.o: src/%.c
+obj/%.o: src/%.cpp
 	$(CXX) $(CFLAGS) -c -o $@ $< $(INCLUDES)
 
 # Create empty dirs if they don't exist
