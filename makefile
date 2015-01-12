@@ -48,5 +48,5 @@ clean:
 	rm -f $(EXEC) $(OBJS)
 
 # Compile & Run
-run: main
-	$(EXEC)
+run: $(EXEC)
+	./$(EXEC)
