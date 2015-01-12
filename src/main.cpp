@@ -18,12 +18,12 @@ int main() {
 
     lib = dlopen(LIBNAME, RTLD_LOCAL);
     // Find and run our init function
-    void (*init)(GameState*) = (void(*)(GameState*)) dlsym(lib, "init");
+    void (*init)(GameState&) = (void(*)(GameState&)) dlsym(lib, "init");
     if ((err = dlerror())) {
         printf("Error loading lib: %s\n", err);
         return -1;
     }
-    init(&gamestate);
+    init(gamestate);
 
     while (gamestate.running) {
         // Check for lib changes, reload if necessary
@@ -36,12 +36,12 @@ int main() {
         }
 
         // Find and run our step function
-        void (*step)(GameState*) = (void(*)(GameState*)) dlsym(lib, "step");
+        void (*step)(GameState&) = (void(*)(GameState&)) dlsym(lib, "step");
         if ((err = dlerror())) {
             printf("Error loading lib: %s\n", err);
             return -1;
         }
-        step(&gamestate);
+        step(gamestate);
     }
 
     dlclose(lib);

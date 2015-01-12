@@ -11,8 +11,8 @@ extern "C" {
         UI* ui;
     };
 
-    void init(GameState*);
-    void step(GameState*);
+    void init(GameState&);
+    void step(GameState&);
 }
 
 #endif
