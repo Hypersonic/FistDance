@@ -47,6 +47,6 @@ dirs:
 clean:
 	rm -f $(EXEC) $(OBJS)
 
-# Compile & Run
+# Run
 run: $(EXEC)
 	./$(EXEC)
