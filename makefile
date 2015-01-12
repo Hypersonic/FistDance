@@ -48,5 +48,5 @@ clean:
 	rm -f $(EXEC) $(OBJS)
 
 # Run
-run: $(EXEC)
+run: main
 	./$(EXEC)
