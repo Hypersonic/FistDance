@@ -31,8 +31,9 @@ EXEC = FistDance_$(MACHINE).out
 CORE_LIB = FistDance_core.dylib
 
 # Link into an executable
-main: dirs $(OBJS) core
-	$(CXX) $(CFLAGS) -o $(EXEC) $(LIBS) src/main.cpp
+# UNIX FORM:
+unix: dirs $(OBJS) core
+	$(CXX) $(CFLAGS) -o $(EXEC) $(LIBS) src/unix.cpp
 
 core: dirs $(OBJS)
 	$(CXX) -dynamiclib $(CFLAGS) -o $(CORE_LIB) $(OBJS) $(LIBS)
@@ -53,5 +54,6 @@ clean:
 	rm -f $(EXEC) $(OBJS) $(CORE_LIB)
 
 # Run
-run: main
+# TODO: Make the dependency for this be the platform the user is on
+run: unix
 	./$(EXEC)
