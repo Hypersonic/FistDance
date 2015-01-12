@@ -25,7 +25,7 @@ int main() {
     }
     init(&gamestate);
 
-    while (true) {
+    while (gamestate.running) {
         // Check for lib changes, reload if necessary
         stat(LIBNAME, &statbuf);
         if (statbuf.st_mtime != libchanged) {
@@ -44,5 +44,6 @@ int main() {
         step(&gamestate);
     }
 
+    dlclose(lib);
     return 0;
 }

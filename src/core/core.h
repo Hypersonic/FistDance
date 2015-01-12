@@ -6,6 +6,7 @@
 // Disable name mangling because this is the interface
 extern "C" {
     struct GameState {
+        bool running = true;
         Simulation* sim;
         UI* ui;
     };
