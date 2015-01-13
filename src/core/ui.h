@@ -8,9 +8,11 @@
 #include "simulation.h"
 
 class UI {
+	int canvasWidth;
+	int canvasHeight;
 	Simulation *sim;
 public:
-	UI(Simulation& sim);
+	UI(Simulation& sim, int canvasWidth, int canvasHeight);
 	void setSim(Simulation& sim);
 	void render();
 };

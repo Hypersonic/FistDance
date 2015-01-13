@@ -3,13 +3,14 @@
 
 // Disable name mangling because this is the interface
 extern "C" {
-    void init(GameState& gamestate) {
-        gamestate.sim = new Simulation();
-        gamestate.ui = new UI(*gamestate.sim);
-    }
+	void init(GameState& gamestate) {
+		gamestate.sim = new Simulation();
+		gamestate.ui = new UI(*gamestate.sim, gamestate.canvasWidth,
+		                      gamestate.canvasHeight);
+	}
 
-    void step(GameState& gamestate) {
-        gamestate.sim->update();
-        gamestate.ui->render();
-    }
+	void step(GameState& gamestate) {
+		gamestate.sim->update();
+		gamestate.ui->render();
+	}
 }
