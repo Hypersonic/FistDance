@@ -1,6 +1,10 @@
 #ifndef DF_CORE
 #define DF_CORE
 
+#define MAC_OS_X_VERSION_MIN_REQUIRED 1050
+#include <SDL2/SDL.h>
+#include <stdio.h>
+
 #include "simulation.h"
 #include "ui.h"
 
@@ -17,8 +21,9 @@ extern "C" {
         UI* ui;
     };
 
-    void init(GameState&);
-    void step(GameState&);
+    void init(GameState &);
+    void step(GameState &);
+    void handleEvents(GameState &);
 }
 
 #endif
