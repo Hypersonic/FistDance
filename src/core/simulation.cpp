@@ -1,5 +1,5 @@
 #include "simulation.h"
 
 void Simulation::update() {
-	printf("simulation updating\n");
+	//printf("simulation updating\n");
 }

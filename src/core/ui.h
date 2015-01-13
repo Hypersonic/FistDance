@@ -11,7 +11,12 @@ class UI {
 	int canvasWidth;
 	int canvasHeight;
 	Simulation *sim;
+
+	void lockSurface(SDL_Surface *surface);
+	void unlockSurface(SDL_Surface *surface);
 public:
+	SDL_Surface *drawSurface;
+
 	UI(Simulation& sim, int canvasWidth, int canvasHeight);
 	void setSim(Simulation& sim);
 	void render();

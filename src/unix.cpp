@@ -69,13 +69,13 @@ int main(int argc, char **argv) {
 int initSDL(int width, int height) {
 	// init sdl
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("Could not init SDL! SDL error: %s", SDL_GetError());
+		printf("Could not init SDL: %s", SDL_GetError());
 	}
 
 	window = SDL_CreateWindow("Fist Dance", SDL_WINDOWPOS_UNDEFINED,
 	                          SDL_WINDOWPOS_UNDEFINED, width, height,
 	                          SDL_WINDOW_SHOWN);
 	if (window == NULL) {
-		printf("Could not init window! SDL error: %s", SDL_GetError());
+		printf("Could not init window: %s", SDL_GetError());
 	}
 }
