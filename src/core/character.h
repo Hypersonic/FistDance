@@ -27,10 +27,11 @@ public:
 	Character(double, double);
 
 	void render(SDL_Surface *);
-	void up(bool);
-	void down(bool);
-	void left(bool);
-	void right(bool);
 };
+
+void up(Character&, const bool);
+void down(Character&, const bool);
+void left(Character&, const bool);
+void right(Character&, const bool);
 
 #endif
