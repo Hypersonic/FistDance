@@ -66,6 +66,8 @@ int main(int argc, char **argv) {
             unload(gamestate);
             dlclose(lib);
             lib = dlopen(LIBNAME, RTLD_LOCAL);
+            // call our load binding
+            load(gamestate);
 
             // Refresh our bindings
             load = (void(*)(GameState&)) dlsym(lib, "load");
