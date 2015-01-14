@@ -23,21 +23,22 @@ extern "C" {
     void terminate(GameState& gamestate) {
     }
 
-	// TODO make this run in another thread
-	void handleEvents(GameState &gamestate) {
-		SDL_Event e;
+}
 
-		while (SDL_PollEvent(&e) != 0) {
-			if (e.type == SDL_QUIT) {
-				gamestate.running = false;
-				return;
-			} else if (e.type == SDL_KEYDOWN && !e.key.repeat) {
-				switch (e.key.keysym.sym) {
-					case SDLK_ESCAPE:
-						gamestate.running = false;
-						return;
-				}
-			}
-		}
-	}
+// TODO make this run in another thread
+void handleEvents(GameState &gamestate) {
+    SDL_Event e;
+
+    while (SDL_PollEvent(&e) != 0) {
+        if (e.type == SDL_QUIT) {
+            gamestate.running = false;
+            return;
+        } else if (e.type == SDL_KEYDOWN && !e.key.repeat) {
+            switch (e.key.keysym.sym) {
+                case SDLK_ESCAPE:
+                    gamestate.running = false;
+                    return;
+            }
+        }
+    }
 }

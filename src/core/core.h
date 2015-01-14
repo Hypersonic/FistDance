@@ -26,7 +26,8 @@ extern "C" {
     void load(GameState&);      // Called on every load
     void unload(GameState&);    // Called on every unload
     void terminate(GameState&); // Called on program close
-    void handleEvents(GameState &);
 }
+
+void handleEvents(GameState &);
 
 #endif
