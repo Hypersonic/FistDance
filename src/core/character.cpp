@@ -7,7 +7,7 @@ Character::Character(double x, double y) {
 }
 
 void Character::render(SDL_Surface *drawSurface) {
-	for (Hitbox hb : hitboxes) {
+	for (Hitbox& hb : hitboxes) {
 		SDL_Rect hitboxRect;
 		hitboxRect.x = x + hb.x - hb.rad;
 		hitboxRect.y = y + hb.y - hb.rad;
