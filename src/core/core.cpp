@@ -31,6 +31,12 @@ extern "C" {
 			if (e.type == SDL_QUIT) {
 				gamestate.running = false;
 				return;
+			} else if (e.type == SDL_KEYDOWN && !e.key.repeat) {
+				switch (e.key.keysym.sym) {
+					case SDLK_ESCAPE:
+						gamestate.running = false;
+						return;
+				}
 			}
 		}
 	}
