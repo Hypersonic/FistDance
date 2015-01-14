@@ -5,8 +5,7 @@ UI::UI(Simulation& sim, int canvasWidth, int canvasHeight) {
 	this->canvasWidth = canvasWidth;
 	this->canvasHeight = canvasHeight;
 	this->drawSurface = SDL_CreateRGBSurface(0, canvasWidth, canvasHeight,
-	                                         32, 0xff000000, 0x00ff0000,
-	                                         0x0000ff00, 0x000000ff);
+	                                         32, 0, 0, 0, 0);
 	if (this->drawSurface == NULL) {
 		printf("CreateRGBSurface failed: %s\n", SDL_GetError());
 		// TODO cause this to fail somehow
@@ -26,7 +25,7 @@ void UI::render() {
 		for (int j = 0; j < canvasWidth; j++) {
 			Uint8 *pixel = (Uint8 *)drawSurface->pixels;
 			pixel += (i * drawSurface->pitch) + (j * sizeof(Uint32));
-			Uint32 color = j % 0xff << 24;
+			Uint32 color = -(int)fmax(i % 0xff, j % 0xff) << 16;
 			*((Uint32 *)pixel) = color;
 		}
 	}

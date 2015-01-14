@@ -9,9 +9,13 @@
 #define LIBNAME "FistDance_core.dylib"
 
 int initSDL(int width, int height);
+void copyToWindowSurface(SDL_Surface *);
+void drawToWindow();
 
 SDL_Window *window = NULL;
-SDL_Surface *surface = NULL;
+SDL_Renderer *windowRenderer = NULL;
+SDL_Surface *windowSurface = NULL;
+SDL_Texture *windowTexture = NULL;
 
 int main(int argc, char **argv) {
     void *lib; // A pointer to our library
@@ -27,7 +31,7 @@ int main(int argc, char **argv) {
 
 	// initialize sdl
 	if (initSDL(gamestate.canvasWidth, gamestate.canvasHeight) < 0) {
-		printf("failed to init sdl: halting program");
+		printf("failed to init sdl: halting program\n");
 		exit(1);
 	}
 
@@ -56,6 +60,10 @@ int main(int argc, char **argv) {
             return -1;
         }
         step(gamestate);
+
+        // Blit from ui.drawSurface to windowSurface
+        copyToWindowSurface(gamestate.ui->drawSurface);
+        drawToWindow();
     }
 
     dlclose(lib); // close the lib
@@ -69,13 +77,60 @@ int main(int argc, char **argv) {
 int initSDL(int width, int height) {
 	// init sdl
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("Could not init SDL: %s", SDL_GetError());
+		fprintf(stderr, "Couldn't init SDL: %s\n", SDL_GetError());
+		return -1;
 	}
 
 	window = SDL_CreateWindow("Fist Dance", SDL_WINDOWPOS_UNDEFINED,
 	                          SDL_WINDOWPOS_UNDEFINED, width, height,
 	                          SDL_WINDOW_SHOWN);
 	if (window == NULL) {
-		printf("Could not init window: %s", SDL_GetError());
+		fprintf(stderr, "Couldn't init window: %s\n", SDL_GetError());
+		return -1;
 	}
+
+	windowRenderer = SDL_CreateRenderer(window, -1,
+	                                    SDL_RENDERER_ACCELERATED |
+	                                    SDL_RENDERER_PRESENTVSYNC);
+    if (windowRenderer == NULL) {
+		fprintf(stderr, "Couldn't init renderer: %s\n", SDL_GetError());
+		return -1;
+    }
+
+	windowSurface = SDL_CreateRGBSurface(0, CANVAS_WIDTH, CANVAS_HEIGHT,
+	                                     32, 0, 0, 0, 0);
+	if (windowSurface == NULL) {
+		fprintf(stderr, "Couldn't init surface: %s\n", SDL_GetError());
+		return -1;
+	}
+
+    windowTexture = SDL_CreateTextureFromSurface(windowRenderer,
+                                                 windowSurface);
+    if (windowTexture == NULL) {
+		fprintf(stderr, "Couldn't init texture: %s\n", SDL_GetError());
+		return -1;
+    }
+
+	return 0;
+}
+
+void copyToWindowSurface(SDL_Surface *surface) {
+    SDL_Rect srcRect;
+    srcRect.x = 0;
+    srcRect.y = 0;
+    srcRect.w = CANVAS_WIDTH;
+    srcRect.h = CANVAS_HEIGHT;
+    SDL_Rect destRect;
+    destRect.x = 0;
+    destRect.y = 0;
+    destRect.w = CANVAS_WIDTH;
+    destRect.h = CANVAS_HEIGHT;
+    SDL_BlitSurface(surface, &srcRect, windowSurface, &destRect);
+}
+
+void drawToWindow() {
+	SDL_UpdateTexture(windowTexture, NULL, windowSurface->pixels,
+	                  windowSurface->pitch);
+	SDL_RenderCopy(windowRenderer, windowTexture, NULL, NULL);
+	SDL_RenderPresent(windowRenderer);
 }
