@@ -32,7 +32,7 @@ void UI::render() {
 	unlockSurface(drawSurface);
 
 	// draw characters
-	for (Character character : sim->characters) {
+	for (Character& character : sim->characters) {
 		character.render(drawSurface);
 	}
 }
