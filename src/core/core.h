@@ -21,8 +21,11 @@ extern "C" {
         UI* ui;
     };
 
-    void init(GameState &);
-    void step(GameState &);
+    void init(GameState &);     // Called on first ever load
+    void step(GameState &);     // Called each tick
+    void load(GameState&);      // Called on every load
+    void unload(GameState&);    // Called on every unload
+    void terminate(GameState&); // Called on program close
     void handleEvents(GameState &);
 }
 

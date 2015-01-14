@@ -24,6 +24,13 @@ int main(int argc, char **argv) {
     GameState gamestate;
     char *err;
 
+    // callback functions
+    void (*init)(GameState&);
+    void (*load)(GameState&);
+    void (*step)(GameState&);
+    void (*unload)(GameState&);
+    void (*terminate)(GameState&);
+
     // get the dll
     stat(LIBNAME, &statbuf);
     libchanged = statbuf.st_mtime;
@@ -36,12 +43,17 @@ int main(int argc, char **argv) {
 	}
 
     // Find and run our init function
-    void (*init)(GameState&) = (void(*)(GameState&)) dlsym(lib, "init");
+    init = (void(*)(GameState&)) dlsym(lib, "init");
+    load = (void(*)(GameState&)) dlsym(lib, "load");
+    step = (void(*)(GameState&))dlsym(lib, "step");
+    unload = (void(*)(GameState&))dlsym(lib, "unload");
+    terminate = (void(*)(GameState&))dlsym(lib, "terminate");
     if ((err = dlerror())) {
         printf("Error loading lib: %s\n", err);
         return -1;
     }
     init(gamestate);
+    load(gamestate);
 
     while (gamestate.running) {
         // Check for lib changes, reload if necessary
@@ -49,22 +61,29 @@ int main(int argc, char **argv) {
         if (statbuf.st_mtime != libchanged) {
             printf("Core lib has been changed, reloading");
             libchanged = statbuf.st_mtime;
+
+            // Call our unload binding, then actually unload and reload
+            unload(gamestate);
             dlclose(lib);
             lib = dlopen(LIBNAME, RTLD_LOCAL);
+
+            // Refresh our bindings
+            load = (void(*)(GameState&)) dlsym(lib, "load");
+            step = (void(*)(GameState&))dlsym(lib, "step");
+            unload = (void(*)(GameState&))dlsym(lib, "unload");
+            terminate = (void(*)(GameState&))dlsym(lib, "terminate");
         }
 
-        // Find and run our step function
-        void (*step)(GameState&) = (void(*)(GameState&))dlsym(lib, "step");
-        if ((err = dlerror())) {
-            printf("Error loading lib: %s\n", err);
-            return -1;
-        }
         step(gamestate);
 
         // Blit from ui.drawSurface to windowSurface
         copyToWindowSurface(gamestate.ui->drawSurface);
         drawToWindow();
     }
+
+    // call unload and terminate
+    unload(gamestate);
+    terminate(gamestate);
 
     dlclose(lib); // close the lib
 

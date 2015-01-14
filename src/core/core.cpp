@@ -14,6 +14,15 @@ extern "C" {
 		gamestate.ui->render();
 	}
 
+    void load(GameState& gamestate) {
+    }
+
+    void unload(GameState& gamestate) {
+    }
+
+    void terminate(GameState& gamestate) {
+    }
+
 	// TODO make this run in another thread
 	void handleEvents(GameState &gamestate) {
 		SDL_Event e;
