@@ -27,7 +27,6 @@ extern "C" {
     	delete gamestate.sim;
     	delete gamestate.ui;
     }
-
 }
 
 // TODO make this run in another thread
@@ -39,11 +38,47 @@ void handleEvents(GameState &gamestate) {
             gamestate.running = false;
             return;
         } else if (e.type == SDL_KEYDOWN && !e.key.repeat) {
-            switch (e.key.keysym.sym) {
-                case SDLK_ESCAPE:
-                    gamestate.running = false;
-                    return;
-            }
+            keyDown(gamestate, e.key.keysym.sym);
+        } else if (e.type == SDL_KEYUP) {
+             keyUp(gamestate, e.key.keysym.sym);
         }
+    }
+}
+
+void keyDown(GameState &gamestate, SDL_Keycode code) {
+    switch (code) {
+        case SDLK_ESCAPE:
+            gamestate.running = false;
+            return;
+        case SDLK_w:
+            gamestate.sim->characters[0].vy = -1;
+            break;
+        case SDLK_a:
+            gamestate.sim->characters[0].vx = -1;
+            break;
+        case SDLK_s:
+            gamestate.sim->characters[0].vy = 1;
+            break;
+        case SDLK_d:
+            gamestate.sim->characters[0].vx = 1;
+            break;
+    }
+}
+
+void keyUp(GameState &gamestate, SDL_Keycode code) {
+    Character &ch = gamestate.sim->characters[0];
+    switch (code) {
+        case SDLK_w:
+            if (ch.vy < 0) ch.vy = 0;
+            break;
+        case SDLK_a:
+            if (ch.vx < 0) ch.vx = 0;
+            break;
+        case SDLK_s:
+            if (ch.vy > 0) ch.vy = 0;
+            break;
+        case SDLK_d:
+            if (ch.vx > 0) ch.vx = 0;
+            break;
     }
 }

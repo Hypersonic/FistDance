@@ -3,6 +3,9 @@
 Character::Character(double x, double y) {
 	this->x = x;
 	this->y = y;
+	vx = 0;
+	vy = 0;
+
 	hitboxes.push_back(Hitbox(0, 0, 10));
 }
 

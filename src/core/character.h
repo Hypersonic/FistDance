@@ -17,9 +17,11 @@ struct Hitbox {
 };
 
 class Character {
+public:
 	double x;
 	double y;
-public:
+	double vx;
+	double vy;
 	std::vector<Hitbox> hitboxes;
 
 	Character(double, double);

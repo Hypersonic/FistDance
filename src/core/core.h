@@ -29,5 +29,7 @@ extern "C" {
 }
 
 void handleEvents(GameState &);
+void keyDown(GameState &gamestate, SDL_Keycode code);
+void keyUp(GameState &gamestate, SDL_Keycode code);
 
 #endif
