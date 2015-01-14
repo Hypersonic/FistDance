@@ -24,6 +24,8 @@ extern "C" {
 
     void terminate(GameState& gamestate) {
         printf("Terminating\n");
+    	delete gamestate.sim;
+    	delete gamestate.ui;
     }
 
 }
