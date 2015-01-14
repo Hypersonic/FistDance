@@ -46,21 +46,22 @@ void handleEvents(GameState &gamestate) {
 }
 
 void keyDown(GameState &gamestate, SDL_Keycode code) {
+    Character &ch = gamestate.sim->characters[0];
     switch (code) {
         case SDLK_ESCAPE:
             gamestate.running = false;
             return;
         case SDLK_w:
-            gamestate.sim->characters[0].vy = -1;
-            break;
-        case SDLK_a:
-            gamestate.sim->characters[0].vx = -1;
+            ch.up(true);
             break;
         case SDLK_s:
-            gamestate.sim->characters[0].vy = 1;
+            ch.down(true);
+            break;
+        case SDLK_a:
+            ch.left(true);
             break;
         case SDLK_d:
-            gamestate.sim->characters[0].vx = 1;
+            ch.right(true);
             break;
     }
 }
@@ -69,16 +70,16 @@ void keyUp(GameState &gamestate, SDL_Keycode code) {
     Character &ch = gamestate.sim->characters[0];
     switch (code) {
         case SDLK_w:
-            if (ch.vy < 0) ch.vy = 0;
-            break;
-        case SDLK_a:
-            if (ch.vx < 0) ch.vx = 0;
+            ch.up(false);
             break;
         case SDLK_s:
-            if (ch.vy > 0) ch.vy = 0;
+            ch.down(false);
+            break;
+        case SDLK_a:
+            ch.left(false);
             break;
         case SDLK_d:
-            if (ch.vx > 0) ch.vx = 0;
+            ch.right(false);
             break;
     }
 }

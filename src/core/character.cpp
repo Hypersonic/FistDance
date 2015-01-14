@@ -20,3 +20,23 @@ void Character::render(SDL_Surface *drawSurface) {
 		SDL_FillRect(drawSurface, &hitboxRect, 0x0000ff);
 	}
 }
+
+void Character::up(bool pressed) {
+	if (pressed) vy = -1;
+	else if (vy < 0) vy = 0;
+}
+
+void Character::down(bool pressed) {
+	if (pressed) vy = 1;
+	else if (vy > 0) vy = 0;
+}
+
+void Character::left(bool pressed) {
+	if (pressed) vx = -1;
+	else if (vx < 0) vx = 0;
+}
+
+void Character::right(bool pressed) {
+	if (pressed) vx = 1;
+	else if (vx > 0) vx = 0;
+}

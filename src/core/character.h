@@ -27,6 +27,10 @@ public:
 	Character(double, double);
 
 	void render(SDL_Surface *);
+	void up(bool);
+	void down(bool);
+	void left(bool);
+	void right(bool);
 };
 
 #endif
