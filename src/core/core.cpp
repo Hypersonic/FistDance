@@ -15,12 +15,15 @@ extern "C" {
 	}
 
     void load(GameState& gamestate) {
+        printf("Loading\n");
     }
 
     void unload(GameState& gamestate) {
+        printf("Unloading\n");
     }
 
     void terminate(GameState& gamestate) {
+        printf("Terminating\n");
     }
 
 }
