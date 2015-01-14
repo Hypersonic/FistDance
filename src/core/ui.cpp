@@ -19,8 +19,8 @@ void UI::setSim(Simulation& sim) {
 void UI::render() {
 	//printf("ui rendering\n");
 
+	// draw background
 	lockSurface(drawSurface);
-
 	for (int i = 0; i < canvasHeight; i++) {
 		for (int j = 0; j < canvasWidth; j++) {
 			Uint8 *pixel = (Uint8 *)drawSurface->pixels;
@@ -30,6 +30,12 @@ void UI::render() {
 		}
 	}
 	unlockSurface(drawSurface);
+
+	// draw characters
+	fprintf(stderr, "%x\n", sim);
+	for (Character character : sim->characters) {
+		character.render(drawSurface);
+	}
 }
 
 void UI::lockSurface(SDL_Surface *surface) {

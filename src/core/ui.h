@@ -3,9 +3,10 @@
 
 #define MAC_OS_X_VERSION_MIN_REQUIRED 1050
 #include <SDL2/SDL.h>
-
 #include <stdio.h>
+
 #include "simulation.h"
+#include "character.h"
 
 class UI {
 	int canvasWidth;
