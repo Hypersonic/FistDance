@@ -32,7 +32,6 @@ void UI::render() {
 	unlockSurface(drawSurface);
 
 	// draw characters
-	fprintf(stderr, "%x\n", sim);
 	for (Character character : sim->characters) {
 		character.render(drawSurface);
 	}
