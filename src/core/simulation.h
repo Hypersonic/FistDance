@@ -2,6 +2,7 @@
 #define FD_SIM
 
 #include <vector>
+#include <math.h>
 #include <stdio.h>
 
 #include "character.h"
