@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
         // Check for lib changes, reload if necessary
         stat(LIBNAME, &statbuf);
         if (statbuf.st_mtime != libchanged) {
-            printf("Core lib has been changed, reloading");
+            printf("Core lib has been changed, reloading\n");
             libchanged = statbuf.st_mtime;
 
             // Call our unload binding, then actually unload and reload
