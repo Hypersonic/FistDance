@@ -61,8 +61,25 @@ void drawCircle(SDL_Surface *drawSurface,
 	unlockSurface(drawSurface);
 }
 
+void wikiFillCircle(SDL_Surface *drawSurface,
+                    double x0, double y0, double rad, Uint32 color) {
+	lockSurface(drawSurface);
+	for (double dy = 1; dy <= rad; dy += 1.) {
+		double dx = sqrt(2 * rad * dy - dy * dy);
+		int x = x0 - dx;
+
+		for (; x <= x0 + dx; x++) {
+			putPixel(drawSurface, x, y0 + rad - dy, color);
+			putPixel(drawSurface, x, y0 - rad + dy, color);
+		}
+	}
+	unlockSurface(drawSurface);
+}
+
 void fillCircle(SDL_Surface *drawSurface,
-                double x0, double y0, double rad, Uint32 color) {}
+                double x0, double y0, double rad, Uint32 color) {
+    wikiFillCircle(drawSurface, x0, y0, rad, color);
+}
 
 void drawFont(SDL_Surface * screen, TTF_Font* font, const double x, const double y, const char * text, const Uint8 r, const Uint8 g, const Uint8 b) { 
     SDL_Color sdl_color = {r, g, b, 0};

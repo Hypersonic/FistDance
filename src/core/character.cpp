@@ -16,7 +16,7 @@ void Character::render(SDL_Surface *drawSurface) {
 	for (Hitbox& hb : hitboxes) {
 		double x = this->x + hb.x;
 		double y = this->y + hb.y;
-		drawCircle(drawSurface, x, y, hb.rad, 0x0000ff);
+		fillCircle(drawSurface, x, y, hb.rad, 0x0000ff);
 	}
 }
 
