@@ -14,13 +14,12 @@ Character::Character(double x, double y) {
 
 void Character::render(SDL_Surface *drawSurface) {
 	for (Hitbox& hb : hitboxes) {
-		SDL_Rect hitboxRect;
-		hitboxRect.x = x + hb.x - hb.rad;
-		hitboxRect.y = y + hb.y - hb.rad;
-		hitboxRect.w = hb.rad * 2;
-		hitboxRect.h = hb.rad * 2;
+		double x = this->x + hb.x - hb.rad;
+		double y = this->y + hb.y - hb.rad;
+		double w = hb.rad * 2;
+		double h = hb.rad * 2;
 
-		SDL_FillRect(drawSurface, &hitboxRect, 0x0000ff);
+		fillRect(drawSurface, x, y, w, h, 0x0000ff);
 	}
 }
 

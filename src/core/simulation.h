@@ -16,7 +16,7 @@ public:
 
 	void update();
 
-    bool checkCollisions(const Character&);
+	bool checkCollisions(const Character&);
 };
 
 #endif

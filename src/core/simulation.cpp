@@ -38,7 +38,6 @@ bool Simulation::checkCollisions(const Character& ch) {
         // Return true if any of them collide
         for (const Hitbox& char_hb : ch.hitboxes) {
             for (const Hitbox& other_hb : other.hitboxes) {
-
                 auto dhbx = (ch.x + char_hb.x) - (other.x + other_hb.x);
                 auto dhby = (ch.y + char_hb.y) - (other.y + other_hb.y);
 

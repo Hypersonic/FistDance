@@ -7,14 +7,12 @@
 
 #include "simulation.h"
 #include "character.h"
+#include "sdl_util.h"
 
 class UI {
 	int canvasWidth;
 	int canvasHeight;
 	Simulation *sim;
-
-	void lockSurface(SDL_Surface *surface);
-	void unlockSurface(SDL_Surface *surface);
 public:
 	SDL_Surface *drawSurface;
 

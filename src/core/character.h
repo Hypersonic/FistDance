@@ -5,6 +5,8 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
+#include "sdl_util.h"
+
 struct Hitbox {
 	double x;
 	double y;
@@ -27,7 +29,7 @@ public:
 
 	Character(double, double);
 
-	void render(SDL_Surface *);
+	void render(SDL_Surface *drawSurface);
 	void up(const bool);
 	void down(const bool);
 	void left(const bool);

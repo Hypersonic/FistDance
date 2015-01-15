@@ -23,10 +23,8 @@ void UI::render() {
 	lockSurface(drawSurface);
 	for (int i = 0; i < canvasHeight; i++) {
 		for (int j = 0; j < canvasWidth; j++) {
-			Uint8 *pixel = (Uint8 *)drawSurface->pixels;
-			pixel += (i * drawSurface->pitch) + (j * sizeof(Uint32));
 			Uint32 color = -(int)fmax(i % 0xff, j % 0xff) << 16;
-			*((Uint32 *)pixel) = color;
+			putPixel(drawSurface, j, i, color);
 		}
 	}
 	unlockSurface(drawSurface);
@@ -35,13 +33,4 @@ void UI::render() {
 	for (Character &character : sim->characters) {
 		character.render(drawSurface);
 	}
-}
-
-void UI::lockSurface(SDL_Surface *surface) {
-	if (SDL_MUSTLOCK(surface))
-		SDL_LockSurface(surface);
-}
-void UI::unlockSurface(SDL_Surface *surface) {
-	if (SDL_MUSTLOCK(surface))
-		SDL_UnlockSurface(surface);
 }
