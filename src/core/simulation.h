@@ -15,6 +15,8 @@ public:
 	Simulation();
 
 	void update();
+
+    bool checkCollisions(const Character&);
 };
 
 #endif

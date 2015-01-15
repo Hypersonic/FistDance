@@ -6,7 +6,10 @@ Character::Character(double x, double y) {
 	vx = 0;
 	vy = 0;
 
-	hitboxes.push_back(Hitbox(0, 0, 10));
+    speed = 5;
+
+	hitboxes.push_back(Hitbox(0, 0, 5));
+	hitboxes.push_back(Hitbox(5, 5, 5));
 }
 
 void Character::render(SDL_Surface *drawSurface) {

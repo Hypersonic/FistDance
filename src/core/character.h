@@ -22,6 +22,7 @@ public:
 	double y;
 	double vx;
 	double vy;
+    double speed;
 	std::vector<Hitbox> hitboxes;
 
 	Character(double, double);
