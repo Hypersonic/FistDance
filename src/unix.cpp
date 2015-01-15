@@ -66,14 +66,15 @@ int main(int argc, char **argv) {
             unload(gamestate);
             dlclose(lib);
             lib = dlopen(LIBNAME, RTLD_LOCAL);
-            // call our load binding
-            load(gamestate);
 
             // Refresh our bindings
             load = (void(*)(GameState&)) dlsym(lib, "load");
             step = (void(*)(GameState&))dlsym(lib, "step");
             unload = (void(*)(GameState&))dlsym(lib, "unload");
             terminate = (void(*)(GameState&))dlsym(lib, "terminate");
+
+            // call our load binding
+            load(gamestate);
         }
 
         step(gamestate);
