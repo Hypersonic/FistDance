@@ -21,22 +21,22 @@ void Character::render(SDL_Surface *drawSurface) {
 	}
 }
 
-void up(Character& character, const bool pressed) {
-	if (pressed) character.vy = -1;
-	else if (character.vy < 0) character.vy = 0;
+void Character::up(const bool pressed) {
+	if (pressed) vy = -1;
+	else if (vy < 0) vy = 0;
 }
 
-void down(Character& character, const bool pressed) {
-	if (pressed) character.vy = 1;
-	else if (character.vy > 0) character.vy = 0;
+void Character::down(const bool pressed) {
+	if (pressed) vy = 1;
+	else if (vy > 0) vy = 0;
 }
 
-void left(Character& character, const bool pressed) {
-	if (pressed) character.vx = -1;
-	else if (character.vx < 0) character.vx = 0;
+void Character::left(const bool pressed) {
+	if (pressed) vx = -1;
+	else if (vx < 0) vx = 0;
 }
 
-void right(Character& character, const bool pressed) {
-	if (pressed) character.vx = 1;
-	else if (character.vx > 0) character.vx = 0;
+void Character::right(const bool pressed) {
+	if (pressed) vx = 1;
+	else if (vx > 0) vx = 0;
 }

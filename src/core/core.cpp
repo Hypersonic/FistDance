@@ -52,16 +52,16 @@ void keyDown(GameState &gamestate, SDL_Keycode code) {
             gamestate.running = false;
             return;
         case SDLK_w:
-            up(ch, true);
+            ch.up(true);
             break;
         case SDLK_s:
-            down(ch, true);
+            ch.down(true);
             break;
         case SDLK_a:
-            left(ch, true);
+            ch.left(true);
             break;
         case SDLK_d:
-            right(ch, true);
+            ch.right(true);
             break;
     }
 }
@@ -70,16 +70,16 @@ void keyUp(GameState &gamestate, SDL_Keycode code) {
     Character &ch = gamestate.sim->characters[0];
     switch (code) {
         case SDLK_w:
-            up(ch, false);
+            ch.up(false);
             break;
         case SDLK_s:
-            down(ch, false);
+            ch.down(false);
             break;
         case SDLK_a:
-            left(ch, false);
+            ch.left(false);
             break;
         case SDLK_d:
-            right(ch, false);
+            ch.right(false);
             break;
     }
 }
