@@ -13,39 +13,41 @@ Simulation::Simulation() {
 
 void Simulation::update() {
 	//printf("simulation updating\n");
-	for (Character &character : characters) {
-        auto len = sqrt(character.vx * character.vx + character.vy * character.vy);
-        if (len > 0) {
-            character.x += character.speed * character.vx / len;
-            if (checkCollisions(character)) {
-                character.x -= character.speed * character.vx / len;
+	for (Character &ch : characters) {
+        if (ch.vx != 0 || ch.vy != 0) {
+            auto len = sqrt(ch.vx * ch.vx + ch.vy * ch.vy);
+
+            ch.x += ch.speed * ch.vx / len;
+            if (checkCollisions(ch)) {
+                ch.x -= ch.speed * ch.vx / len;
             }
-            character.y += character.speed * character.vy / len;
-            if (checkCollisions(character)) {
-                character.y -= character.speed * character.vy / len;
+
+            ch.y += ch.speed * ch.vy / len;
+            if (checkCollisions(ch)) {
+                ch.y -= ch.speed * ch.vy / len;
             }
         }
-	}
+    }
 }
 
-bool Simulation::checkCollisions(const Character& character) {
+bool Simulation::checkCollisions(const Character& ch) {
     for (const Character& other : characters) {
-        if (&other == &character) continue; // Skip checking against itself
+        if (&other == &ch) continue; // Skip checking against itself
 
-        // For each pair of hitboxes, check circular collisions. Return true if any of them are true 
-        for (const Hitbox& char_hb : character.hitboxes) {
+        // For each pair of hitboxes, check circular collisions.
+        // Return true if any of them collide
+        for (const Hitbox& char_hb : ch.hitboxes) {
             for (const Hitbox& other_hb : other.hitboxes) {
 
-                auto dhbx = (character.x + char_hb.x) - (other.x + other_hb.x);
-                auto dhby = (character.y + char_hb.y) - (other.y + other_hb.y);
+                auto dhbx = (ch.x + char_hb.x) - (other.x + other_hb.x);
+                auto dhby = (ch.y + char_hb.y) - (other.y + other_hb.y);
 
-                if (sqrt(dhbx * dhbx + dhby * dhby) <= (char_hb.rad + other_hb.rad)) {
-                        return true;
+                auto radsum = char_hb.rad + other_hb.rad;
+                if (sqrt(dhbx * dhbx + dhby * dhby) <= radsum) {
+                    return true;
                 }
-
             }
         }
-
     }
     return false;
 }
