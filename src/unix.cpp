@@ -1,5 +1,6 @@
 #define MAC_OS_X_VERSION_MIN_REQUIRED 1050
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <dlfcn.h>
 #include <sys/stat.h>
@@ -131,6 +132,10 @@ int initSDL(int width, int height) {
     if (windowTexture == NULL) {
 		fprintf(stderr, "Couldn't init texture: %s\n", SDL_GetError());
 		return -1;
+    }
+
+    if (TTF_Init() == -1)  {
+        printf("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
     }
 
 	return 0;

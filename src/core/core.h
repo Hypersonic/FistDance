@@ -4,6 +4,7 @@
 #define MAC_OS_X_VERSION_MIN_REQUIRED 1050
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "simulation.h"
 #include "ui.h"
@@ -17,6 +18,7 @@ extern "C" {
         int canvasWidth = CANVAS_WIDTH;
         int canvasHeight = CANVAS_HEIGHT;
         bool running = true;
+        clock_t prevStepTime; // Amount of CLOCKS_PER_SEC that the previous frame took
         Simulation* sim;
         UI* ui;
     };

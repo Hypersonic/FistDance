@@ -10,6 +10,11 @@ UI::UI(Simulation& sim, int canvasWidth, int canvasHeight) {
 		printf("CreateRGBSurface failed: %s\n", SDL_GetError());
 		// TODO cause this to fail somehow
 	}
+
+    font = TTF_OpenFont("res/font.ttf", 16);
+    if (font == NULL) {
+        printf("Unable to load font!\n");
+    }
 }
 
 void UI::setSim(Simulation& sim) {
@@ -33,4 +38,5 @@ void UI::render() {
 	for (Character &character : sim->characters) {
 		character.render(drawSurface);
 	}
+
 }

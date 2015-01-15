@@ -63,3 +63,14 @@ void drawCircle(SDL_Surface *drawSurface,
 
 void fillCircle(SDL_Surface *drawSurface,
                 double x0, double y0, double rad, Uint32 color) {}
+
+void drawFont(SDL_Surface * screen, TTF_Font* font, const double x, const double y, const char * text, const Uint8 r, const Uint8 g, const Uint8 b) { 
+    SDL_Color sdl_color = {r, g, b, 0};
+    SDL_Surface* text_surface = TTF_RenderText_Blended(font, text, sdl_color); 
+    SDL_Rect rect = {static_cast<int>(x),
+                     static_cast<int>(y),
+                     text_surface->w,
+                     text_surface->h};
+    SDL_BlitSurface(text_surface, NULL, screen, &rect);
+    SDL_FreeSurface(text_surface);
+}
