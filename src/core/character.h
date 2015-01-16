@@ -11,6 +11,7 @@ struct Hitbox {
 	double x;
 	double y;
 	double rad;
+    bool hit = false;
 	Hitbox(double x, double y, double rad) {
 		this->x = x;
 		this->y = y;

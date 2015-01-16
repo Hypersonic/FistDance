@@ -18,7 +18,7 @@ void Character::render(SDL_Surface *drawSurface) {
 		double y = this->y + hb.y;
         if (0 < x && x < drawSurface->w &&
             0 < y && y < drawSurface->h)
-                fillCircle(drawSurface, x, y, hb.rad, hb.triggered ? 0xff0000 : 0x0000ff);
+                fillCircle(drawSurface, x, y, hb.rad, hb.hit ? 0xff0000 : 0x0000ff);
 	}
 }
 

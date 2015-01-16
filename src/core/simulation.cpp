@@ -12,6 +12,11 @@ Simulation::Simulation() {
 }
 
 void Simulation::update() {
+    for (Character &ch : characters) {
+        for (Hitbox& hb : ch.hitboxes) {
+            hb.hit = false;
+        }
+    }
 	//printf("simulation updating\n");
 	for (Character &ch : characters) {
         if (ch.vx != 0 || ch.vy != 0) {
@@ -30,19 +35,21 @@ void Simulation::update() {
     }
 }
 
-bool Simulation::checkCollisions(const Character& ch) {
-    for (const Character& other : characters) {
+bool Simulation::checkCollisions(Character& ch) {
+    for (Character& other : characters) {
         if (&other == &ch) continue; // Skip checking against itself
 
         // For each pair of hitboxes, check circular collisions.
         // Return true if any of them collide
-        for (const Hitbox& char_hb : ch.hitboxes) {
-            for (const Hitbox& other_hb : other.hitboxes) {
+        for (Hitbox& char_hb : ch.hitboxes) {
+            for (Hitbox& other_hb : other.hitboxes) {
                 auto dhbx = (ch.x + char_hb.x) - (other.x + other_hb.x);
                 auto dhby = (ch.y + char_hb.y) - (other.y + other_hb.y);
 
                 auto radsum = char_hb.rad + other_hb.rad;
                 if (sqrt(dhbx * dhbx + dhby * dhby) <= radsum) {
+                    char_hb.hit = true;
+                    other_hb.hit = true;
                     return true;
                 }
             }
