@@ -16,10 +16,12 @@ extern "C" {
         clock_t end_time = clock();
         gamestate.prevStepTime = end_time - start_time;
 
+		// draw fps counter
         char fps_buff[16];
-        snprintf(fps_buff, sizeof(fps_buff), "%.0f fps", 1 / ((float) gamestate.prevStepTime / CLOCKS_PER_SEC));
-
-        drawFont(gamestate.ui->drawSurface, gamestate.ui->font, 10, 10, fps_buff, 255, 255, 255);
+        snprintf(fps_buff, sizeof(fps_buff), "%.0f fps",
+                 1 / ((float) gamestate.prevStepTime / CLOCKS_PER_SEC));
+        drawFont(gamestate.ui->drawSurface, gamestate.ui->font, 10, 10,
+                 fps_buff, 255, 255, 255);
 
 	}
 

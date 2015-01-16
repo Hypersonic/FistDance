@@ -23,15 +23,15 @@ extern "C" {
         UI* ui;
     };
 
-    void init(GameState &);     // Called on first ever load
-    void step(GameState &);     // Called each tick
-    void load(GameState&);      // Called on every load
-    void unload(GameState&);    // Called on every unload
-    void terminate(GameState&); // Called on program close
+    void init(GameState &);      // Called on first ever load
+    void step(GameState &);      // Called each tick
+    void load(GameState &);      // Called on every load
+    void unload(GameState &);    // Called on every unload
+    void terminate(GameState &); // Called on program close
 }
 
 void handleEvents(GameState &);
-void keyDown(GameState &gamestate, SDL_Keycode code);
-void keyUp(GameState &gamestate, SDL_Keycode code);
+void keyDown(GameState &, SDL_Keycode);
+void keyUp(GameState &, SDL_Keycode);
 
 #endif
