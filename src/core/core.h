@@ -14,7 +14,7 @@
 #define CANVAS_HEIGHT 720
 
 #define TICKS_PER_SEC 60
-#define CLOCKS_PER_TICK CLOCKS_PER_SEC / TICKS_PER_SEC
+#define CLOCKS_PER_TICK (CLOCKS_PER_SEC / TICKS_PER_SEC)
 
 // Disable name mangling because this is the interface
 extern "C" {
