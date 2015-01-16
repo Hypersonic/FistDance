@@ -3,6 +3,7 @@
 
 #define MAC_OS_X_VERSION_MIN_REQUIRED 1050
 #include <SDL2/SDL.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -11,6 +12,9 @@
 
 #define CANVAS_WIDTH 1280
 #define CANVAS_HEIGHT 720
+
+#define TICKS_PER_SEC 60
+#define CLOCKS_PER_TICK CLOCKS_PER_SEC / TICKS_PER_SEC
 
 // Disable name mangling because this is the interface
 extern "C" {

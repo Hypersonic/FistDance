@@ -23,6 +23,9 @@ extern "C" {
         drawFont(gamestate.ui->drawSurface, gamestate.ui->font, 10, 10,
                  fps_buff, 255, 255, 255);
 
+		// sleep for rest of thingy
+		clock_t endWait = start_time + CLOCKS_PER_TICK;
+		while (clock() < endWait);
 	}
 
     void load(GameState& gamestate) {
