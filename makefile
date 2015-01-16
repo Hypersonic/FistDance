@@ -8,23 +8,26 @@ DIRS =
 OBJS = $(patsubst src/core/%.cpp,obj/core/%.o, $(wildcard src/core/*.cpp) $(foreach d, $(DIRS), $(wildcard src/core/$(d)/*.cpp)))
 
 # Our compiler
-CXX = g++
+CXX = clang++
 # initialize $PLATFORM_LIBS to blank so the platform-specfic section can fill it in later
 PLATFORM_LIBS = 
 # Warnings
 WARNINGS = -Wall -Wextra
 # compiler features
 FEATURES =
-CFLAGS = -w -lSDL2 -lSDL2_ttf -O -std=c++11 -g -march=native $(WARNINGS) $(FEATURES)
+CFLAGS = -w -lSDL2 -lSDL2_ttf -O -stdlib=libc++ -std=gnu++11 -g -march=native $(WARNINGS) $(FEATURES)
 
 # Handle platform-specific setup
 ifeq ($(MACHINE), Darwin)
 	CXX = clang++
-	PLATFORM_LIBS = 
+	PLATFORM_FLAGS = -mmacosx-version-min=10.7
+	PLATFORM_LIBS =
 endif
 
 # The libs we build with should be our platform libs plus whatver platform-independent libs we want
 LIBS = $(PLATFORM_LIBS)
+# Same with the flags
+FLAGS = $(PLATFORM_FLAGS) $(CFLAGS)
 
 # The name of our executable
 EXEC = FistDance_$(MACHINE).out
@@ -33,14 +36,14 @@ CORE_LIB = FistDance_core.dylib
 # Link into an executable
 # UNIX FORM:
 unix: dirs $(OBJS) core
-	$(CXX) $(CFLAGS) -o $(EXEC) $(LIBS) src/unix.cpp
+	$(CXX) $(FLAGS) -o $(EXEC) $(LIBS) src/unix.cpp
 
 core: dirs $(OBJS)
-	$(CXX) -dynamiclib $(CFLAGS) -o $(CORE_LIB) $(OBJS) $(LIBS)
+	$(CXX) -dynamiclib $(FLAGS) -o $(CORE_LIB) $(OBJS) $(LIBS)
 
 # Compile for each thing
 obj/%.o: src/%.cpp
-	$(CXX) $(CFLAGS) -c -o $@ $< $(INCLUDES)
+	$(CXX) $(FLAGS) -c -o $@ $< $(INCLUDES)
 
 # Create empty dirs if they don't exist
 dirs:
