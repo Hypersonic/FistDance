@@ -52,8 +52,8 @@ bool Simulation::checkCollisions(Character& ch) {
 
                 auto radsum = char_hb.rad + other_hb.rad;
                 if (sqrt(dhbx * dhbx + dhby * dhby) <= radsum) {
-                    char_hb.hit = true;
-                    other_hb.hit = true;
+                    char_hb.hit |= HITMASK_HITBOX;
+                    other_hb.hit |= HITMASK_HITBOX;
                     return true;
                 }
             }
@@ -80,7 +80,7 @@ bool Simulation::checkCollisions(Character& ch) {
 
             if (pf.x <= near_x && near_x <= pf.x + pf.w &&
             	pf.y <= near_y && near_y <= pf.y + pf.h) {
-            	char_hb.hit = true;
+            	char_hb.hit |= HITMASK_PLATFORM;
             	return true;
             }
         }
