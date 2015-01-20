@@ -1,13 +1,17 @@
 #include "simulation.h"
 
 Simulation::Simulation() {
-	characters.push_back(Character(100, 100));
+    characters.push_back(Character(true, 100, 100));
     for (int i = 0; i < 10; i++) {
-        Character* charlie = new Character(200 + i * 100, 100);
+        Character* charlie = new Character(false, 200 + i * 100, 100);
         charlie->vx = rand() % 10;
         charlie->vy = rand() % 10;
         charlie->speed = .5;
         characters.push_back(*charlie);
+    }
+
+    for (int i = 0; i < 10; i++) {
+    	platforms.push_back(Platform(175 + i * 100, 200, 50, 10));
     }
 }
 
@@ -17,8 +21,8 @@ void Simulation::update() {
             hb.hit = false;
         }
     }
-	//printf("simulation updating\n");
-	for (Character &ch : characters) {
+    //printf("simulation updating\n");
+    for (Character &ch : characters) {
         if (ch.vx != 0 || ch.vy != 0) {
             auto len = sqrt(ch.vx * ch.vx + ch.vy * ch.vy);
 
@@ -55,5 +59,32 @@ bool Simulation::checkCollisions(Character& ch) {
             }
         }
     }
+
+    for (Platform &pf : platforms) {
+        // TODO do a bounding-box check first
+        for (Hitbox &char_hb : ch.hitboxes) {
+            // center of platform
+            auto cx = pf.x + pf.w / 2;
+            auto cy = pf.y + pf.h / 2;
+
+            // character => platform vector
+            auto dx = cx - (char_hb.x + ch.x);
+            auto dy = cy - (char_hb.y + ch.y);
+
+            // renormalize vector to hitbox's radius
+            auto len = sqrt(dx * dx + dy * dy);
+            dx *= char_hb.rad / len;
+            dy *= char_hb.rad / len;
+            auto near_x = ch.x + char_hb.x + dx;
+            auto near_y = ch.y + char_hb.y + dy;
+
+            if (pf.x <= near_x && near_x <= pf.x + pf.w &&
+            	pf.y <= near_y && near_y <= pf.y + pf.h) {
+            	char_hb.hit = true;
+            	return true;
+            }
+        }
+    }
+
     return false;
 }

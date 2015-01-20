@@ -21,6 +21,7 @@ struct Hitbox {
 
 class Character {
 public:
+	bool isPlayer;
 	double x;
 	double y;
 	double vx;
@@ -28,7 +29,7 @@ public:
     double speed;
 	std::vector<Hitbox> hitboxes;
 
-	Character(double, double);
+	Character(bool, double, double);
 
 	void render(SDL_Surface *drawSurface);
 	void up(const bool);

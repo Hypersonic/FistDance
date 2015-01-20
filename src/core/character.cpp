@@ -1,6 +1,7 @@
 #include "character.h"
 
-Character::Character(double x, double y) {
+Character::Character(bool isPlayer, double x, double y) {
+	this->isPlayer = isPlayer;
 	this->x = x;
 	this->y = y;
 	vx = 0;

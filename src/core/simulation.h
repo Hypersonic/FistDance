@@ -6,16 +6,17 @@
 #include <stdio.h>
 
 #include "character.h"
+#include "platform.h"
 
 // Holds all world state, handles updating it
 class Simulation {
 public:
 	std::vector<Character> characters;
+	std::vector<Platform> platforms;
 
 	Simulation();
 
 	void update();
-
 	bool checkCollisions(Character&);
 };
 

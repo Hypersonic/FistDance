@@ -39,4 +39,8 @@ void UI::render() {
 		character.render(drawSurface);
 	}
 
+	// draw platforms
+	for (Platform &pf : sim->platforms) {
+		fillRect(drawSurface, pf.x, pf.y, pf.w, pf.h, 0x0000ff);
+	}
 }
