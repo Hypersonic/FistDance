@@ -20,7 +20,7 @@ Simulation::Simulation() {
 void Simulation::update() {
     for (Character &ch : characters) {
         for (Hitbox& hb : ch.hitboxes) {
-            hb.hit = false;
+            hb.hit = 0;
         }
     }
     //printf("simulation updating\n");
