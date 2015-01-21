@@ -1,9 +1,9 @@
 #include "simulation.h"
 
 Simulation::Simulation() {
-    characters.push_back(Character(true, 100, 100));
+    characters.push_back(Character(100, 100));
     for (int i = 0; i < 10; i++) {
-        Character* charlie = new Character(false, 200 + i * 100, 100);
+        Character* charlie = new Character(200 + i * 100, 100);
         charlie->vx = rand() % 10;
         charlie->vy = rand() % 10;
         charlie->speed = .5;
