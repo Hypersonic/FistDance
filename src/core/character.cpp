@@ -18,7 +18,13 @@ void Character::render(SDL_Surface *drawSurface) {
 		double y = this->y + hb.y;
         if (0 < x && x < drawSurface->w &&
             0 < y && y < drawSurface->h) {
-            Uint32 color = hb.hit ? 0xff0000 : 0x0000ff;
+            Uint32 color = 0x0000ff;
+            if (HITTING_HITBOX(hb.hit)) {
+                color = 0xff0000;
+            }
+            if (HITTING_PLATFORM(hb.hit)) {
+                color = 0x00ff00;
+            }
             fillCircle(drawSurface, x, y, hb.rad, color);
         }
 	}

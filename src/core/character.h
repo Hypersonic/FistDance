@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "sdl_util.h"
+#include "hitmasks.h"
 
 struct Hitbox {
 	double x;
