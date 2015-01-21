@@ -37,6 +37,9 @@ void Simulation::update() {
             ch.y += ch.speed * ch.vy / len;
             if (checkCollisions(ch)) {
                 ch.y -= ch.speed * ch.vy / len;
+
+            	// we hit something - so we should stop
+            	ch.vy = 0;
             }
         }
     }
