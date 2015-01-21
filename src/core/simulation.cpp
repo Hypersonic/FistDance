@@ -13,6 +13,8 @@ Simulation::Simulation() {
     for (int i = 0; i < 10; i++) {
     	platforms.push_back(Platform(175 + i * 100, 200, 50, 10));
     }
+
+    platforms.push_back(Platform(100, 300, 1000, 30));
 }
 
 void Simulation::update() {
@@ -23,6 +25,7 @@ void Simulation::update() {
     }
     //printf("simulation updating\n");
     for (Character &ch : characters) {
+        ch.vy += 0.1; // Apply a bit of gravity
         if (ch.vx != 0 || ch.vy != 0) {
             auto len = sqrt(ch.vx * ch.vx + ch.vy * ch.vy);
 
