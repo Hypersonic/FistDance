@@ -27,9 +27,12 @@ public:
 	double vx;
 	double vy;
     double speed;
+    int jumpsRemaining;
 	std::vector<Hitbox> hitboxes;
 
 	Character(double, double);
+
+    bool hittingPlatform();
 
 	void render(SDL_Surface *drawSurface);
 	void up(const bool);
