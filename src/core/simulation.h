@@ -11,6 +11,8 @@
 
 // Holds all world state, handles updating it
 class Simulation {
+	bool cphcnp(Platform &, Hitbox &, Character &);
+	bool cphcbb(Platform &, Hitbox &, Character &);
 public:
 	std::vector<Character> characters;
 	std::vector<Platform> platforms;

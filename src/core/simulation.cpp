@@ -64,30 +64,51 @@ bool Simulation::checkCollisions(Character& ch) {
     }
 
     for (Platform &pf : platforms) {
-        // TODO do a bounding-box check first
         for (Hitbox &char_hb : ch.hitboxes) {
-            // center of platform
-            auto cx = pf.x + pf.w / 2;
-            auto cy = pf.y + pf.h / 2;
-
-            // character => platform vector
-            auto dx = cx - (char_hb.x + ch.x);
-            auto dy = cy - (char_hb.y + ch.y);
-
-            // renormalize vector to hitbox's radius
-            auto len = sqrt(dx * dx + dy * dy);
-            dx *= char_hb.rad / len;
-            dy *= char_hb.rad / len;
-            auto near_x = ch.x + char_hb.x + dx;
-            auto near_y = ch.y + char_hb.y + dy;
-
-            if (pf.x <= near_x && near_x <= pf.x + pf.w &&
-            	pf.y <= near_y && near_y <= pf.y + pf.h) {
-            	char_hb.hit |= HITMASK_PLATFORM;
-            	return true;
-            }
+        	if (cphcbb(pf, char_hb, ch)) return true;
         }
     }
 
     return false;
+}
+
+// TODO: come up with better function name
+// check platform hitbox collision: nearest point
+bool Simulation::cphcnp(Platform &pf, Hitbox &hb, Character &ch) {
+	// center of platform
+	auto cx = pf.x + pf.w / 2;
+	auto cy = pf.y + pf.h / 2;
+
+	// get vector from character to platform
+	auto dx = cx - (hb.x + ch.x);
+	auto dy = cy - (hb.y + ch.y);
+
+	// renormalize vector to hitbox's radius
+	auto len = sqrt(dx * dx + dy * dy);
+	dx *= hb.rad / len;
+	dy *= hb.rad / len;
+	auto near_x = ch.x + hb.x + dx; // nearest point to platf center
+	auto near_y = ch.y + hb.y + dy;
+
+	if (pf.x <= near_x && near_x <= pf.x + pf.w &&
+    	pf.y <= near_y && near_y <= pf.y + pf.h) {
+    	hb.hit |= HITMASK_PLATFORM;
+    	return true;
+	}
+
+	return false;
+}
+
+// check platform hitbox collision: bounding box
+bool Simulation::cphcbb(Platform &pf, Hitbox &hb, Character &ch) {
+	auto pfcx = pf.x + pf.w / 2;
+	auto pfcy = pf.y + pf.h / 2;
+
+	bool horzIntersect = abs(pfcx - (ch.x + hb.x)) < pf.w / 2 + hb.rad;
+	bool vertIntersect = abs(pfcy - (ch.y + hb.y)) < pf.h / 2 + hb.rad;
+	bool intersection = horzIntersect && vertIntersect;
+
+	if (intersection) hb.hit |= HITMASK_PLATFORM;
+
+	return intersection;
 }
