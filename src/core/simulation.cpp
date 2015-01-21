@@ -102,6 +102,7 @@ bool Simulation::cphcnp(Platform &pf, Hitbox &hb, Character &ch) {
 	return false;
 }
 
+// TODO: come up with better function name
 // check platform hitbox collision: bounding box
 bool Simulation::cphcbb(Platform &pf, Hitbox &hb, Character &ch) {
 	auto pfcx = pf.x + pf.w / 2;
