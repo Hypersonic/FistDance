@@ -3,8 +3,10 @@
 Character::Character(double x, double y) {
 	this->x = x;
 	this->y = y;
-	vx = 0;
-	vy = 0;
+	ctrl_vx = 0;
+	ctrl_vy = 0;
+	envt_vx = 0;
+	envt_vy = 0;
 
     jumpsRemaining = 2;
 
@@ -44,18 +46,18 @@ bool Character::hittingPlatform() {
 void Character::up(const bool pressed) {
     if (pressed && jumpsRemaining > 0) {
         jumpsRemaining--;
-        vy = -3;
+        envt_vy = -6;
     }
 }
 
 void Character::down(const bool pressed) {}
 
 void Character::left(const bool pressed) {
-	if (pressed) vx = -1;
-	else if (vx < 0) vx = 0;
+	if (pressed) ctrl_vx = -1;
+	else if (ctrl_vx < 0) ctrl_vx = 0;
 }
 
 void Character::right(const bool pressed) {
-	if (pressed) vx = 1;
-	else if (vx > 0) vx = 0;
+	if (pressed) ctrl_vx = 1;
+	else if (ctrl_vx > 0) ctrl_vx = 0;
 }

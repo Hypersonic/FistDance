@@ -24,9 +24,11 @@ class Character {
 public:
 	double x;
 	double y;
-	double vx;
-	double vy;
+	double ctrl_vx; // control
+	double ctrl_vy;
     double speed;
+	double envt_vx; // environment
+	double envt_vy;
     int jumpsRemaining;
 	std::vector<Hitbox> hitboxes;
 

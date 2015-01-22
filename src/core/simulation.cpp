@@ -4,8 +4,8 @@ Simulation::Simulation() {
     characters.push_back(Character(100, 100));
     for (int i = 0; i < 10; i++) {
         Character* charlie = new Character(200 + i * 100, 100);
-        charlie->vx = rand() % 10;
-        charlie->vy = rand() % 10;
+        charlie->ctrl_vx = rand() % 10;
+        charlie->ctrl_vy = rand() % 10;
         charlie->speed = .5;
         characters.push_back(*charlie);
     }
@@ -25,21 +25,29 @@ void Simulation::update() {
     }
 
     for (Character &ch : characters) {
-        ch.vy += 0.1; // Apply a bit of gravity
-        if (ch.vx != 0 || ch.vy != 0) {
-            auto len = sqrt(ch.vx * ch.vx + ch.vy * ch.vy);
+        ch.envt_vy += 0.3; // Apply a bit of gravity
+        auto vx = ch.envt_vx + ch.ctrl_vx;
+        auto vy = ch.envt_vy + ch.ctrl_vy;
+        if (vx != 0 || vy != 0) {
+            auto len = sqrt(ch.ctrl_vx * ch.ctrl_vx +
+                            ch.ctrl_vy * ch.ctrl_vy);
 
-            ch.x += ch.speed * ch.vx / len;
+            auto dx = ch.envt_vx;
+            if (len > 0) dx += ch.speed * ch.ctrl_vx / len;
+            ch.x += dx;
             if (checkCollisions(ch)) {
-                ch.x -= ch.speed * ch.vx / len;
+                ch.x -= dx;
             }
 
-            ch.y += ch.speed * ch.vy / len;
+            auto dy = ch.envt_vy;
+            if (len > 0) dy += ch.speed * ch.ctrl_vy / len;
+            ch.y += dy;
             if (checkCollisions(ch)) {
-                ch.y -= ch.speed * ch.vy / len;
+                ch.y -= dy;
 
             	// we hit something - so we should stop
-            	ch.vy = 0;
+            	ch.envt_vy = 0;
+            	ch.ctrl_vy = 0;
             }
         }
     }
