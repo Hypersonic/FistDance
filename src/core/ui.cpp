@@ -35,8 +35,17 @@ void UI::render() {
 	unlockSurface(drawSurface);
 
 	// draw characters
-	for (Character &character : sim->characters) {
-		character.render(drawSurface);
+	for (Character &ch : sim->characters) {
+		ch.render(drawSurface);
+
+		// debug render
+		char vy_str[256];
+		vy_str[0] = 'v';
+		vy_str[1] = 'y';
+		vy_str[2] = ':';
+		snprintf(vy_str + 3, sizeof(vy_str), "%.1f", ch.vy);
+		drawFont(drawSurface, font, ch.x + 10, ch.y - 20, vy_str,
+		         0xff, 0xff, 0xff);
 	}
 
 	// draw platforms
