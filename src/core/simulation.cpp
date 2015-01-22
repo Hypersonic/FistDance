@@ -18,13 +18,12 @@ Simulation::Simulation() {
 }
 
 void Simulation::update() {
+    // update characters
     for (Character &ch : characters) {
         for (Hitbox& hb : ch.hitboxes) {
             hb.hit = 0;
         }
-    }
-    //printf("simulation updating\n");
-    for (Character &ch : characters) {
+
         ch.vy += 0.1; // Apply a bit of gravity
         if (ch.vx != 0 || ch.vy != 0) {
             auto len = sqrt(ch.vx * ch.vx + ch.vy * ch.vy);
