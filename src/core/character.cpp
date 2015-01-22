@@ -29,6 +29,8 @@ void Character::render(SDL_Surface *drawSurface) {
             if (HITTING_PLATFORM(hb.hit)) {
                 color = 0x00ff00;
                 jumpsRemaining = 2; // Reset jumps left to 2
+            } else if (jumpsRemaining > 1) {
+                jumpsRemaining = 1;
             }
             fillCircle(drawSurface, x, y, hb.rad, color);
         }
