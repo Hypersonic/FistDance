@@ -48,10 +48,7 @@ void Character::up(const bool pressed) {
     }
 }
 
-void Character::down(const bool pressed) {
-	if (pressed) vy = 1;
-	else if (vy > 0) vy = 0;
-}
+void Character::down(const bool pressed) {}
 
 void Character::left(const bool pressed) {
 	if (pressed) vx = -1;
