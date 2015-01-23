@@ -64,7 +64,10 @@ void keyDown(GameState &gamestate, SDL_Keycode code) {
     switch (code) {
         case SDLK_ESCAPE:
             gamestate.running = false;
-            return;
+            break;
+        case SDLK_PERIOD:
+        	init(gamestate);
+        	break;
         case SDLK_w:
             ch.up(true);
             break;
