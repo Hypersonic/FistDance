@@ -1,5 +1,4 @@
-#ifndef DF_CORE
-#define DF_CORE
+#pragma once
 
 #define MAC_OS_X_VERSION_MIN_REQUIRED 1050
 #include <SDL2/SDL.h>
@@ -37,5 +36,3 @@ extern "C" {
 void handleEvents(GameState &);
 void keyDown(GameState &, SDL_Keycode);
 void keyUp(GameState &, SDL_Keycode);
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef FD_SIM
-#define FD_SIM
+#pragma once
 
 #include <vector>
 #include <math.h>
@@ -22,5 +21,3 @@ public:
 	void update();
 	bool checkCollisions(Character&);
 };
-
-#endif

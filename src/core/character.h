@@ -1,5 +1,4 @@
-#ifndef FD_CHAR
-#define FD_CHAR
+#pragma once
 
 #define MAC_OS_X_VERSION_MIN_REQUIRED 1050
 #include <SDL2/SDL.h>
@@ -42,5 +41,3 @@ public:
 	void left(const bool);
 	void right(const bool);
 };
-
-#endif

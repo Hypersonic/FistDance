@@ -1,5 +1,4 @@
-#ifndef FD_PLAT
-#define FD_PLAT
+#pragma once
 
 class Platform {
 public:
@@ -10,5 +9,3 @@ public:
 
 	Platform(double, double, double, double);
 };
-
-#endif
