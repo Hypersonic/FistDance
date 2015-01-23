@@ -8,7 +8,8 @@ Character::Character(double x, double y) {
 	envt_vx = 0;
 	envt_vy = 0;
 
-    jumpsRemaining = 2;
+    maxJumps = 2;
+    jumpsRemaining = maxJumps;
 
     speed = 5;
 
@@ -28,7 +29,7 @@ void Character::render(SDL_Surface *drawSurface) {
             }
             if (HITTING_PLATFORM(hb.hit)) {
                 color = 0x00ff00;
-                jumpsRemaining = 2; // Reset jumps left to 2
+                jumpsRemaining = maxJumps; // Reset jumps left to max
             } else if (jumpsRemaining > 1) {
                 jumpsRemaining = 1;
             }

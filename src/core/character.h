@@ -29,6 +29,7 @@ public:
 	double envt_vx; // environment
 	double envt_vy;
     int jumpsRemaining;
+    int maxJumps;
 	std::vector<Hitbox> hitboxes;
 
 	Character(double, double);
