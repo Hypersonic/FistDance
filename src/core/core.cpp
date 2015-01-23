@@ -41,6 +41,11 @@ extern "C" {
     	delete gamestate.sim;
     	delete gamestate.ui;
     }
+
+    void reset(GameState &gamestate) {
+    	terminate(gamestate);
+    	init(gamestate);
+    }
 }
 
 // TODO make this run in another thread
@@ -66,7 +71,7 @@ void keyDown(GameState &gamestate, SDL_Keycode code) {
             gamestate.running = false;
             break;
         case SDLK_PERIOD:
-        	init(gamestate);
+        	reset(gamestate);
         	break;
         case SDLK_w:
             ch.up(true);
