@@ -10,13 +10,19 @@
 #include "character.h"
 #include "sdl_util.h"
 
+
 class UI {
 	int canvasWidth;
 	int canvasHeight;
 	Simulation *sim;
+    /* The following is a buffer for the DEBUG_TEXT macro to store it's stuff in. Do not use the DEBUG_TEXT macro outside of this class.
+     * Do not look directly at the DEBUG_TEXT macro. Do not approach the DEBUG_TEXT macro. */
+    char ui_debug_buffer[256];
+    #define DEBUG_TEXT(fmt, stmt) (snprintf(ui_debug_buffer, 256, #stmt ":" fmt, stmt), ui_debug_buffer)
 public:
 	SDL_Surface *drawSurface;
     TTF_Font *font;
+
 
 	UI(Simulation& sim, int canvasWidth, int canvasHeight);
 	void setSim(Simulation& sim);
