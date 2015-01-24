@@ -52,11 +52,13 @@ void Simulation::update() {
             }
         }
 
-        // if we've landed
         for (Hitbox &hb : ch.hitboxes) {
             if (HITTING_PLATFORM(hb.hit)) {
-                // reset jumpsRemaining
+                // if we've landed, reset jumpsRemaining
                 ch.jumpsLeft = ch.maxJumps;
+            } else {
+            	// if off the floor, make sure we 'used' a jump
+            	if (ch.jumpsLeft == ch.maxJumps) ch.jumpsLeft--;
             }
         }
     }
