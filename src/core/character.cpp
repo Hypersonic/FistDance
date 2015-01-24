@@ -9,7 +9,7 @@ Character::Character(double x, double y) {
 	envt_vy = 0;
 
     maxJumps = 2;
-    jumpsRemaining = maxJumps;
+    jumpsLeft = maxJumps;
 
     speed = 5;
 
@@ -23,16 +23,15 @@ void Character::render(SDL_Surface *drawSurface) {
 		double y = this->y + hb.y;
         if (0 < x && x < drawSurface->w &&
             0 < y && y < drawSurface->h) {
-            Uint32 color = 0x0000ff;
-            if (HITTING_HITBOX(hb.hit)) {
-                color = 0xff0000;
-            }
+            Uint32 color;
             if (HITTING_PLATFORM(hb.hit)) {
                 color = 0x00ff00;
-                jumpsRemaining = maxJumps; // Reset jumps left to max
-            } else if (jumpsRemaining > 1) {
-                jumpsRemaining = 1;
+            } else if (HITTING_HITBOX(hb.hit)) {
+                color = 0xff0000;
+            } else {
+                color = 0x0000ff;
             }
+
             fillCircle(drawSurface, x, y, hb.rad, color);
         }
 	}
@@ -47,8 +46,8 @@ bool Character::hittingPlatform() {
 }
 
 void Character::up(const bool pressed) {
-    if (pressed && jumpsRemaining > 0) {
-        jumpsRemaining--;
+    if (pressed && jumpsLeft > 0) {
+        jumpsLeft--;
         envt_vy = -6;
     }
 }

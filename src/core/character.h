@@ -25,16 +25,18 @@ public:
 	double y;
 	double ctrl_vx; // control
 	double ctrl_vy;
-    double speed;
+	double speed;
 	double envt_vx; // environment
 	double envt_vy;
-    int jumpsRemaining;
-    int maxJumps;
+
+	int jumpsLeft;
+	int maxJumps;
+
 	std::vector<Hitbox> hitboxes;
 
 	Character(double, double);
 
-    bool hittingPlatform();
+	bool hittingPlatform();
 
 	void render(SDL_Surface *drawSurface);
 	void up(const bool);

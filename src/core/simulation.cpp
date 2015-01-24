@@ -25,6 +25,7 @@ void Simulation::update() {
     }
 
     for (Character &ch : characters) {
+        // move and check for collisions
         ch.envt_vy += 0.3; // Apply a bit of gravity
         auto vx = ch.envt_vx + ch.ctrl_vx;
         auto vy = ch.envt_vy + ch.ctrl_vy;
@@ -48,6 +49,14 @@ void Simulation::update() {
             	// we hit something - so we should stop
             	ch.envt_vy = 0;
             	ch.ctrl_vy = 0;
+            }
+        }
+
+        // if we've landed
+        for (Hitbox &hb : ch.hitboxes) {
+            if (HITTING_PLATFORM(hb.hit)) {
+                // reset jumpsRemaining
+                ch.jumpsLeft = ch.maxJumps;
             }
         }
     }
