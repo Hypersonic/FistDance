@@ -52,14 +52,20 @@ void Simulation::update() {
             }
         }
 
+        // jump code
+        bool hasLanded = false;
         for (Hitbox &hb : ch.hitboxes) {
             if (HITTING_PLATFORM(hb.hit)) {
-                // if we've landed, reset jumpsRemaining
-                ch.jumpsLeft = ch.maxJumps;
-            } else {
-            	// if off the floor, make sure we 'used' a jump
-            	if (ch.jumpsLeft == ch.maxJumps) ch.jumpsLeft--;
+                hasLanded = true;
             }
+        }
+
+        if (hasLanded) {
+            // if we've landed, reset jumpsRemaining
+        	ch.jumpsLeft = ch.maxJumps;
+        } else if (ch.jumpsLeft == ch.maxJumps) {
+            // if off the floor, make sure we 'used' a jump
+        	ch.jumpsLeft--;
         }
     }
 }
