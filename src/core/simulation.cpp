@@ -2,7 +2,7 @@
 
 Simulation::Simulation() {
     characters.push_back(Character(100, 100));
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
         Character* charlie = new Character(200 + i * 100, 100);
         charlie->ctrl_vx = rand() % 10;
         charlie->ctrl_vy = rand() % 10;
@@ -10,8 +10,8 @@ Simulation::Simulation() {
         characters.push_back(*charlie);
     }
 
-    for (int i = 0; i < 10; i++) {
-    	platforms.push_back(Platform(175 + i * 100, 200, 50, 10));
+    for (int i = 0; i < 5; i++) {
+    	platforms.push_back(Platform(175 + i * 200, 200, 50, 10));
     }
 
     platforms.push_back(Platform(100, 300, 1000, 30));
