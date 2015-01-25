@@ -18,10 +18,14 @@ class UI {
     int canvasWidth;
     int canvasHeight;
     Simulation *sim;
-    /* The following is a buffer for the DEBUG_TEXT macro to store it's stuff in. Do not use the DEBUG_TEXT macro outside of this class.
-     * Do not look directly at the DEBUG_TEXT macro. Do not approach the DEBUG_TEXT macro. */
+    /* Buffer for the DEBUG_TEXT macro to store it's stuff in.
+     * Do not use the DEBUG_TEXT macro outside of this class.
+     * Do not look directly at the DEBUG_TEXT macro.
+     * Do not approach the DEBUG_TEXT macro. */
     char ui_debug_buffer[256];
-    #define DEBUG_TEXT(fmt, stmt) (snprintf(ui_debug_buffer, sizeof(char) * sizeof(ui_debug_buffer), #stmt ":" fmt, stmt), ui_debug_buffer)
+    #define DEBUG_TEXT(fmt, stmt) (snprintf(ui_debug_buffer, \
+          sizeof(char) * sizeof(ui_debug_buffer), #stmt ":" fmt, stmt), \
+          ui_debug_buffer)
     std::list<char*> ui_debug_log;
 public:
     SDL_Surface *drawSurface;
