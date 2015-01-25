@@ -10,6 +10,7 @@
 
 // Holds all world state, handles updating it
 class Simulation {
+    void updateCharacter(Character &);
     bool cphcnp(Platform &, Hitbox &, Character &);
     bool cphcbb(Platform &, Hitbox &, Character &);
 public:

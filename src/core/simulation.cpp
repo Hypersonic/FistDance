@@ -25,48 +25,54 @@ void Simulation::update() {
     }
 
     for (Character &ch : characters) {
-        // move and check for collisions
-        ch.envt_vy += 0.3; // Apply a bit of gravity
-        auto vx = ch.envt_vx + ch.ctrl_vx;
-        auto vy = ch.envt_vy + ch.ctrl_vy;
-        if (vx != 0 || vy != 0) {
-            auto len = sqrt(ch.ctrl_vx * ch.ctrl_vx +
-                            ch.ctrl_vy * ch.ctrl_vy);
+        updateCharacter(ch);
+    }
+}
 
-            auto dx = ch.envt_vx;
-            if (len > 0) dx += ch.speed * ch.ctrl_vx / len;
-            ch.x += dx;
-            if (checkCollisions(ch)) {
-                ch.x -= dx;
-            }
+void Simulation::updateCharacter(Character &ch) {
+    // move and check for collisions
+    ch.envt_vy += 0.3; // Apply a bit of gravity
+    auto vx = ch.envt_vx + ch.ctrl_vx;
+    auto vy = ch.envt_vy + ch.ctrl_vy;
+    if (vx != 0 || vy != 0) {
+        auto len = sqrt(ch.ctrl_vx * ch.ctrl_vx +
+                        ch.ctrl_vy * ch.ctrl_vy);
 
-            auto dy = ch.envt_vy;
-            if (len > 0) dy += ch.speed * ch.ctrl_vy / len;
-            ch.y += dy;
-            if (checkCollisions(ch)) {
-                ch.y -= dy;
-
-                // we hit something - so we should stop
-                ch.envt_vy = 0;
-                ch.ctrl_vy = 0;
-            }
+        // handle x-movement / collisions
+        auto dx = ch.envt_vx;
+        if (len > 0) dx += ch.speed * ch.ctrl_vx / len;
+        ch.x += dx;
+        if (checkCollisions(ch)) {
+            ch.x -= dx;
         }
 
-        // jump code
-        bool hasLanded = false;
-        for (Hitbox &hb : ch.hitboxes) {
-            if (HITTING_PLATFORM(hb.hit)) {
-                hasLanded = true;
-            }
-        }
+        // handle y-movement / collisions
+        auto dy = ch.envt_vy;
+        if (len > 0) dy += ch.speed * ch.ctrl_vy / len;
+        ch.y += dy;
+        if (checkCollisions(ch)) {
+            ch.y -= dy;
 
-        if (hasLanded) {
-            // if we've landed, reset jumpsRemaining
-            ch.jumpsLeft = ch.maxJumps;
-        } else if (ch.jumpsLeft == ch.maxJumps) {
-            // if off the floor, make sure we 'used' a jump
-            ch.jumpsLeft--;
+            // we hit something - so we should stop
+            ch.envt_vy = 0;
+            ch.ctrl_vy = 0;
         }
+    }
+
+    // jump code
+    bool hasLanded = false;
+    for (Hitbox &hb : ch.hitboxes) {
+        if (HITTING_PLATFORM(hb.hit)) {
+            hasLanded = true;
+        }
+    }
+
+    if (hasLanded) {
+        // if we've landed, reset jumpsRemaining
+        ch.jumpsLeft = ch.maxJumps;
+    } else if (ch.jumpsLeft == ch.maxJumps) {
+        // if off the floor, make sure we 'used' a jump
+        ch.jumpsLeft--;
     }
 }
 
