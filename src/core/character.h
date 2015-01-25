@@ -8,39 +8,42 @@
 #include "hitmasks.h"
 
 struct Hitbox {
-	double x;
-	double y;
-	double rad;
-	int hit = false;
-	Hitbox(double x, double y, double rad) {
-		this->x = x;
-		this->y = y;
-		this->rad = rad;
-	}
+    double x;
+    double y;
+    double rad;
+    bool isFist;
+    int hit = false;
+
+    Hitbox(double x, double y, double rad, bool isFist) {
+        this->x = x;
+        this->y = y;
+        this->rad = rad;
+        this->isFist = isFist;
+    }
 };
 
 class Character {
 public:
-	double x;
-	double y;
-	double ctrl_vx; // control
-	double ctrl_vy;
-	double speed;
-	double envt_vx; // environment
-	double envt_vy;
+    double x;
+    double y;
+    double ctrl_vx; // control
+    double ctrl_vy;
+    double speed;
+    double envt_vx; // environment
+    double envt_vy;
 
-	int jumpsLeft;
-	int maxJumps;
+    int jumpsLeft;
+    int maxJumps;
 
-	std::vector<Hitbox> hitboxes;
+    std::vector<Hitbox> hitboxes;
 
-	Character(double, double);
+    Character(double, double);
 
-	bool hittingPlatform();
+    bool hittingPlatform();
 
-	void render(SDL_Surface *drawSurface);
-	void up(const bool);
-	void down(const bool);
-	void left(const bool);
-	void right(const bool);
+    void render(SDL_Surface *drawSurface);
+    void up(const bool);
+    void down(const bool);
+    void left(const bool);
+    void right(const bool);
 };

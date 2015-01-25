@@ -13,8 +13,8 @@ Character::Character(double x, double y) {
 
     speed = 5;
 
-    hitboxes.push_back(Hitbox(0, 0, 10));
-    hitboxes.push_back(Hitbox(10, 10, 10));
+    hitboxes.push_back(Hitbox(0, 0, 10, false));
+    hitboxes.push_back(Hitbox(10, 10, 10, false));
 }
 
 void Character::render(SDL_Surface *drawSurface) {
