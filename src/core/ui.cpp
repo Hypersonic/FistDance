@@ -21,8 +21,6 @@ void UI::setSim(Simulation& sim) {
 }
 
 void UI::render() {
-    //printf("ui rendering\n");
-
     // draw background
     lockSurface(drawSurface);
     for (int i = 0; i < canvasHeight; i++) {
