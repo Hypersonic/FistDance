@@ -26,29 +26,29 @@ int main(int argc, char **argv) {
     char *err;
 
     // callback functions
-    void (*init)(GameState&);
-    void (*load)(GameState&);
-    void (*step)(GameState&);
-    void (*unload)(GameState&);
-    void (*terminate)(GameState&);
+    void (*init)(GameState &);
+    void (*load)(GameState &);
+    void (*step)(GameState &);
+    void (*unload)(GameState &);
+    void (*terminate)(GameState &);
 
     // get the dll
     stat(LIBNAME, &statbuf);
     libchanged = statbuf.st_mtime;
     lib = dlopen(LIBNAME, RTLD_LOCAL);
 
-	// initialize sdl
-	if (initSDL(gamestate.canvasWidth, gamestate.canvasHeight) < 0) {
-		printf("failed to init sdl: halting program\n");
-		exit(1);
-	}
+    // initialize sdl
+    if (initSDL(gamestate.canvasWidth, gamestate.canvasHeight) < 0) {
+        printf("failed to init sdl: halting program\n");
+        exit(1);
+    }
 
     // Find and run our init function
-    init = (void(*)(GameState&)) dlsym(lib, "init");
-    load = (void(*)(GameState&)) dlsym(lib, "load");
-    step = (void(*)(GameState&))dlsym(lib, "step");
-    unload = (void(*)(GameState&))dlsym(lib, "unload");
-    terminate = (void(*)(GameState&))dlsym(lib, "terminate");
+    init = (void(*)(GameState &)) dlsym(lib, "init");
+    load = (void(*)(GameState &)) dlsym(lib, "load");
+    step = (void(*)(GameState &)) dlsym(lib, "step");
+    unload = (void(*)(GameState &)) dlsym(lib, "unload");
+    terminate = (void(*)(GameState &)) dlsym(lib, "terminate");
     if ((err = dlerror())) {
         printf("Error loading lib: %s\n", err);
         return -1;
@@ -69,10 +69,10 @@ int main(int argc, char **argv) {
             lib = dlopen(LIBNAME, RTLD_LOCAL);
 
             // Refresh our bindings
-            load = (void(*)(GameState&)) dlsym(lib, "load");
-            step = (void(*)(GameState&))dlsym(lib, "step");
-            unload = (void(*)(GameState&))dlsym(lib, "unload");
-            terminate = (void(*)(GameState&))dlsym(lib, "terminate");
+            load = (void(*)(GameState &)) dlsym(lib, "load");
+            step = (void(*)(GameState &)) dlsym(lib, "step");
+            unload = (void(*)(GameState &)) dlsym(lib, "unload");
+            terminate = (void(*)(GameState &)) dlsym(lib, "terminate");
 
             // call our load binding
             load(gamestate);
@@ -91,54 +91,54 @@ int main(int argc, char **argv) {
 
     dlclose(lib); // close the lib
 
-	// wrap up SDL
-	SDL_DestroyWindow(window);
+    // wrap up SDL
+    SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
 }
 
 int initSDL(int width, int height) {
-	// init sdl
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		fprintf(stderr, "Couldn't init SDL: %s\n", SDL_GetError());
-		return -1;
-	}
-
-	window = SDL_CreateWindow("Fist Dance", SDL_WINDOWPOS_UNDEFINED,
-	                          SDL_WINDOWPOS_UNDEFINED, width, height,
-	                          SDL_WINDOW_SHOWN);
-	if (window == NULL) {
-		fprintf(stderr, "Couldn't init window: %s\n", SDL_GetError());
-		return -1;
-	}
-
-	windowRenderer = SDL_CreateRenderer(window, -1,
-	                                    SDL_RENDERER_ACCELERATED |
-	                                    SDL_RENDERER_PRESENTVSYNC);
-    if (windowRenderer == NULL) {
-		fprintf(stderr, "Couldn't init renderer: %s\n", SDL_GetError());
-		return -1;
+    // init sdl
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        fprintf(stderr, "Couldn't init SDL: %s\n", SDL_GetError());
+        return -1;
     }
 
-	windowSurface = SDL_CreateRGBSurface(0, CANVAS_WIDTH, CANVAS_HEIGHT,
-	                                     32, 0, 0, 0, 0);
-	if (windowSurface == NULL) {
-		fprintf(stderr, "Couldn't init surface: %s\n", SDL_GetError());
-		return -1;
-	}
+    window = SDL_CreateWindow("Fist Dance", SDL_WINDOWPOS_UNDEFINED,
+                              SDL_WINDOWPOS_UNDEFINED, width, height,
+                              SDL_WINDOW_SHOWN);
+    if (window == NULL) {
+        fprintf(stderr, "Couldn't init window: %s\n", SDL_GetError());
+        return -1;
+    }
+
+    windowRenderer = SDL_CreateRenderer(window, -1,
+                                        SDL_RENDERER_ACCELERATED |
+                                        SDL_RENDERER_PRESENTVSYNC);
+    if (windowRenderer == NULL) {
+        fprintf(stderr, "Couldn't init renderer: %s\n", SDL_GetError());
+        return -1;
+    }
+
+    windowSurface = SDL_CreateRGBSurface(0, CANVAS_WIDTH, CANVAS_HEIGHT,
+                                         32, 0, 0, 0, 0);
+    if (windowSurface == NULL) {
+        fprintf(stderr, "Couldn't init surface: %s\n", SDL_GetError());
+        return -1;
+    }
 
     windowTexture = SDL_CreateTextureFromSurface(windowRenderer,
                                                  windowSurface);
     if (windowTexture == NULL) {
-		fprintf(stderr, "Couldn't init texture: %s\n", SDL_GetError());
-		return -1;
+        fprintf(stderr, "Couldn't init texture: %s\n", SDL_GetError());
+        return -1;
     }
 
     if (TTF_Init() == -1)  {
         printf("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
     }
 
-	return 0;
+    return 0;
 }
 
 void copyToWindowSurface(SDL_Surface *surface) {
@@ -156,8 +156,8 @@ void copyToWindowSurface(SDL_Surface *surface) {
 }
 
 void drawToWindow() {
-	SDL_UpdateTexture(windowTexture, NULL, windowSurface->pixels,
-	                  windowSurface->pitch);
-	SDL_RenderCopy(windowRenderer, windowTexture, NULL, NULL);
-	SDL_RenderPresent(windowRenderer);
+    SDL_UpdateTexture(windowTexture, NULL, windowSurface->pixels,
+                      windowSurface->pitch);
+    SDL_RenderCopy(windowRenderer, windowTexture, NULL, NULL);
+    SDL_RenderPresent(windowRenderer);
 }

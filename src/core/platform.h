@@ -2,10 +2,10 @@
 
 class Platform {
 public:
-	double x;
-	double y;
-	double w;
-	double h;
+    double x;
+    double y;
+    double w;
+    double h;
 
-	Platform(double, double, double, double);
+    Platform(double, double, double, double);
 };

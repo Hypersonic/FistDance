@@ -2,31 +2,31 @@
 
 // Disable name mangling because this is the interface
 extern "C" {
-	void init(GameState &gamestate) {
-		gamestate.sim = new Simulation();
-		gamestate.ui = new UI(*gamestate.sim, gamestate.canvasWidth,
-		                      gamestate.canvasHeight);
-	}
+    void init(GameState &gamestate) {
+        gamestate.sim = new Simulation();
+        gamestate.ui = new UI(*gamestate.sim, gamestate.canvasWidth,
+                              gamestate.canvasHeight);
+    }
 
-	void step(GameState &gamestate) {
+    void step(GameState &gamestate) {
         clock_t start_time = clock();
-		handleEvents(gamestate);
-		gamestate.sim->update();
-		gamestate.ui->render();
+        handleEvents(gamestate);
+        gamestate.sim->update();
+        gamestate.ui->render();
         clock_t end_time = clock();
         gamestate.prevStepTime = end_time - start_time;
 
-		// draw fps counter
+        // draw fps counter
         char fps_buff[16];
         snprintf(fps_buff, sizeof(fps_buff), "%.0f fps",
                  1 / ((float) gamestate.prevStepTime / CLOCKS_PER_SEC));
         drawFont(gamestate.ui->drawSurface, gamestate.ui->font, 10, 10,
                  fps_buff, 255, 255, 255);
 
-		// sleep for rest of thingy
-		clock_t endWait = start_time + CLOCKS_PER_TICK;
-		while (clock() < endWait);
-	}
+        // sleep for rest of thingy
+        clock_t endWait = start_time + CLOCKS_PER_TICK;
+        while (clock() < endWait);
+    }
 
     void load(GameState& gamestate) {
         printf("Loading\n");
@@ -38,13 +38,13 @@ extern "C" {
 
     void terminate(GameState& gamestate) {
         printf("Terminating\n");
-    	delete gamestate.sim;
-    	delete gamestate.ui;
+        delete gamestate.sim;
+        delete gamestate.ui;
     }
 
     void reset(GameState &gamestate) {
-    	terminate(gamestate);
-    	init(gamestate);
+        terminate(gamestate);
+        init(gamestate);
         gamestate.ui->push_log_msg("Reloaded!");
     }
 }
@@ -72,8 +72,8 @@ void keyDown(GameState &gamestate, SDL_Keycode code) {
             gamestate.running = false;
             break;
         case SDLK_PERIOD:
-        	reset(gamestate);
-        	break;
+            reset(gamestate);
+            break;
         case SDLK_w:
             ch.up(true);
             break;
