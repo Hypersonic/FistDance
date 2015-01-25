@@ -8,7 +8,6 @@ UI::UI(Simulation& sim, int canvasWidth, int canvasHeight) {
                                              32, 0, 0, 0, 0);
     if (this->drawSurface == NULL) {
         printf("CreateRGBSurface failed: %s\n", SDL_GetError());
-        // TODO cause this to fail somehow
     }
 
     font = TTF_OpenFont("res/font.ttf", 16);
