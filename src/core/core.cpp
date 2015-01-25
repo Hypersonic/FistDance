@@ -45,6 +45,7 @@ extern "C" {
     void reset(GameState &gamestate) {
     	terminate(gamestate);
     	init(gamestate);
+        gamestate.ui->push_log_msg("Reloaded!");
     }
 }
 

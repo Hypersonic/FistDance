@@ -43,4 +43,18 @@ void UI::render() {
 	for (Platform &pf : sim->platforms) {
 		fillRect(drawSurface, pf.x, pf.y, pf.w, pf.h, 0x0000ff);
 	}
+
+    int y = 32;
+    for (char *msg : ui_debug_log) {
+        y += TTF_FontHeight(font);
+        drawFont(drawSurface, font, 0, y, msg, 0xff, 0xff, 0xff);
+
+    }
+}
+
+void UI::push_log_msg(char *msg) {
+    if (ui_debug_log.size() > MAX_LOG_SIZE) {
+        ui_debug_log.pop_front();
+    }
+    ui_debug_log.push_back(msg);
 }
