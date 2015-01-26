@@ -16,15 +16,14 @@ void putPixel(SDL_Surface *drawSurface, int x, int y, Uint32 color) {
     *((Uint32 *)pixel) = color;
 }
 
-void fillRect(SDL_Surface *drawSurface,
-               double x, double y, double w, double h, Uint32 color) {
+void fillRect(SDL_Surface *drawSurface, Vec2 pos, Vec2 dim, Uint32 col) {
     SDL_Rect rect;
-    rect.x = x;
-    rect.y = y;
-    rect.w = w;
-    rect.h = h;
+    rect.x = pos.x;
+    rect.y = pos.y;
+    rect.w = dim.x;
+    rect.h = dim.y;
 
-    SDL_FillRect(drawSurface, &rect, color);
+    SDL_FillRect(drawSurface, &rect, col);
 }
 
 // draw circle using midpint circle algorithm

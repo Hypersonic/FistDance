@@ -38,7 +38,7 @@ void UI::render() {
 
     // draw platforms
     for (Platform &pf : sim->platforms) {
-        fillRect(drawSurface, pf.pos.x, pf.pos.y, pf.dim.x, pf.dim.y, 0x0000ff);
+        fillRect(drawSurface, pf.pos, pf.dim, 0x0000ff);
     }
 
     int y = 32;
