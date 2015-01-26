@@ -6,17 +6,22 @@
 
 #include "sdl_util.h"
 #include "hitmasks.h"
+#include "vec.h"
 
 struct Hitbox {
-    double x;
-    double y;
+	Vec2 pos;
     double rad;
     bool isFist;
     int hit = false;
 
     Hitbox(double x, double y, double rad, bool isFist) {
-        this->x = x;
-        this->y = y;
+        pos = Vec2(x, y);
+        this->rad = rad;
+        this->isFist = isFist;
+    }
+
+    Hitbox(Vec2 pos, double rad, bool isFist) {
+        this->pos = pos;
         this->rad = rad;
         this->isFist = isFist;
     }
@@ -24,13 +29,10 @@ struct Hitbox {
 
 class Character {
 public:
-    double x;
-    double y;
-    double ctrl_vx; // control
-    double ctrl_vy;
+    Vec2 pos;
+    Vec2 ctrl_vel;
+    Vec2 envt_vel;
     double speed;
-    double envt_vx; // environment
-    double envt_vy;
 
     int jumpsLeft;
     int maxJumps;
@@ -38,6 +40,7 @@ public:
     std::vector<Hitbox> hitboxes;
 
     Character(double, double);
+    Character(Vec2);
 
     bool hittingPlatform();
 

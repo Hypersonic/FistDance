@@ -1,11 +1,12 @@
 #pragma once
 
+#include "vec.h"
+
 class Platform {
 public:
-    double x;
-    double y;
-    double w;
-    double h;
+	Vec2 pos;
+	Vec2 dim;
 
     Platform(double, double, double, double);
+	bool pointInPlat(Vec2);
 };

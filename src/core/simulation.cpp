@@ -4,8 +4,8 @@ Simulation::Simulation() {
     characters.push_back(Character(100, 100));
     for (int i = 0; i < 5; i++) {
         Character* charlie = new Character(200 + i * 200, 100);
-        charlie->ctrl_vx = rand() % 10;
-        charlie->ctrl_vy = rand() % 10;
+        charlie->ctrl_vel.x = rand() % 10;
+        charlie->ctrl_vel.y = rand() % 10;
         charlie->speed = .5;
         characters.push_back(*charlie);
     }
@@ -30,32 +30,32 @@ void Simulation::update() {
 }
 
 void Simulation::updateCharacter(Character &ch) {
+	// apply a bit of gravity
+    ch.envt_vel.y += 0.3;
+
     // move and check for collisions
-    ch.envt_vy += 0.3; // Apply a bit of gravity
-    auto vx = ch.envt_vx + ch.ctrl_vx;
-    auto vy = ch.envt_vy + ch.ctrl_vy;
-    if (vx != 0 || vy != 0) {
-        auto len = sqrt(ch.ctrl_vx * ch.ctrl_vx +
-                        ch.ctrl_vy * ch.ctrl_vy);
+    auto total_vel = ch.envt_vel + ch.ctrl_vel;
+    if (total_vel.x != 0 || total_vel.y != 0) {
+        auto len = ch.ctrl_vel.len();
 
         // handle x-movement / collisions
-        auto dx = ch.envt_vx;
-        if (len > 0) dx += ch.speed * ch.ctrl_vx / len;
-        ch.x += dx;
+        auto dx = ch.envt_vel.x;
+        if (len > 0) dx += ch.speed * ch.ctrl_vel.x / len;
+        ch.pos.x += dx;
         if (checkCollisions(ch)) {
-            ch.x -= dx;
+            ch.pos.x -= dx;
         }
 
         // handle y-movement / collisions
-        auto dy = ch.envt_vy;
-        if (len > 0) dy += ch.speed * ch.ctrl_vy / len;
-        ch.y += dy;
+        auto dy = ch.envt_vel.y;
+        if (len > 0) dy += ch.speed * ch.ctrl_vel.y / len;
+        ch.pos.y += dy;
         if (checkCollisions(ch)) {
-            ch.y -= dy;
+            ch.pos.y -= dy;
 
             // we hit something - so we should stop
-            ch.envt_vy = 0;
-            ch.ctrl_vy = 0;
+            ch.envt_vel.y = 0;
+            ch.ctrl_vel.y = 0;
         }
     }
 
@@ -84,11 +84,11 @@ bool Simulation::checkCollisions(Character& ch) {
         // Return true if any of them collide
         for (Hitbox& char_hb : ch.hitboxes) {
             for (Hitbox& other_hb : other.hitboxes) {
-                auto dhbx = (ch.x + char_hb.x) - (other.x + other_hb.x);
-                auto dhby = (ch.y + char_hb.y) - (other.y + other_hb.y);
-
+                Vec2 hb_diff = (ch.pos + char_hb.pos) -
+                               (other.pos + other_hb.pos);
                 auto radsum = char_hb.rad + other_hb.rad;
-                if (sqrt(dhbx * dhbx + dhby * dhby) <= radsum) {
+
+                if (hb_diff.len() <= radsum) {
                     char_hb.hit |= HITMASK_HITBOX;
                     other_hb.hit |= HITMASK_HITBOX;
                     return true;
@@ -110,22 +110,14 @@ bool Simulation::checkCollisions(Character& ch) {
 // check platform hitbox collision: nearest point
 bool Simulation::cphcnp(Platform &pf, Hitbox &hb, Character &ch) {
     // center of platform
-    auto cx = pf.x + pf.w / 2;
-    auto cy = pf.y + pf.h / 2;
+    Vec2 pfCenter = pf.pos + pf.dim / 2;
 
-    // get vector from character to platform
-    auto dx = cx - (hb.x + ch.x);
-    auto dy = cy - (hb.y + ch.y);
+	// get nearest point to platf center
+    Vec2 posDiff = pfCenter - (hb.pos + ch.pos);
+    posDiff.normalize(hb.rad);
+    auto near_pos = ch.pos + hb.pos + posDiff;
 
-    // renormalize vector to hitbox's radius
-    auto len = sqrt(dx * dx + dy * dy);
-    dx *= hb.rad / len;
-    dy *= hb.rad / len;
-    auto near_x = ch.x + hb.x + dx; // nearest point to platf center
-    auto near_y = ch.y + hb.y + dy;
-
-    if (pf.x <= near_x && near_x <= pf.x + pf.w &&
-        pf.y <= near_y && near_y <= pf.y + pf.h) {
+    if (pf.pointInPlat(near_pos)) {
         hb.hit |= HITMASK_PLATFORM;
         return true;
     }
@@ -136,11 +128,12 @@ bool Simulation::cphcnp(Platform &pf, Hitbox &hb, Character &ch) {
 // TODO: come up with better function name
 // check platform hitbox collision: bounding box
 bool Simulation::cphcbb(Platform &pf, Hitbox &hb, Character &ch) {
-    auto pfcx = pf.x + pf.w / 2;
-    auto pfcy = pf.y + pf.h / 2;
+    Vec2 platCenter = pf.pos + pf.dim / 2;
+    Vec2 hb_pos = ch.pos + hb.pos;
+	Vec2 radsum = pf.dim / 2 + Vec2(hb.rad, hb.rad);
 
-    bool horzIntersect = abs(pfcx - (ch.x + hb.x)) < pf.w / 2 + hb.rad;
-    bool vertIntersect = abs(pfcy - (ch.y + hb.y)) < pf.h / 2 + hb.rad;
+    bool horzIntersect = abs(platCenter.x - hb_pos.x) < radsum.x;
+    bool vertIntersect = abs(platCenter.y - hb_pos.y) < radsum.y;
     bool intersection = horzIntersect && vertIntersect;
 
     if (intersection) hb.hit |= HITMASK_PLATFORM;
