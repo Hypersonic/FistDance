@@ -31,8 +31,8 @@ Character::Character(Vec2 pos) {
 void Character::render(SDL_Surface *drawSurface) {
     for (Hitbox& hb : hitboxes) {
         // get render pos for hitbox
-        Vec2 hb_pos = pos;
-        hb_pos.add(hb.pos);
+        Vec2 hb_pos(pos);
+        hb_pos += hb.pos;
 
         // check window bounds
         if (0 < hb_pos.x && hb_pos.x < drawSurface->w &&

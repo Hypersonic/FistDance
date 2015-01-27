@@ -89,6 +89,7 @@ bool Simulation::checkCollisions(Character& ch) {
                 auto radsum = char_hb.rad + other_hb.rad;
 
                 if (hb_diff.len() <= radsum) {
+                printf("diff: %f, %f, sum: %f\n", hb_diff.x, hb_diff.y, radsum);
                     char_hb.hit |= HITMASK_HITBOX;
                     other_hb.hit |= HITMASK_HITBOX;
                     return true;
