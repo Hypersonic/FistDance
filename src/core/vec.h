@@ -13,6 +13,9 @@ public:
     void normalize(double newlen);
 };
 
+bool operator==(const Vec2&, const Vec2&);
+bool operator!=(const Vec2&, const Vec2&);
+
 Vec2 operator+(const Vec2&, const Vec2&);
 Vec2 operator+=(Vec2&, Vec2&);
 

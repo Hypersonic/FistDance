@@ -9,6 +9,14 @@ void Vec2::normalize(double newlen) {
     y = y / len() * newlen;
 }
 
+bool operator==(const Vec2& first, const Vec2& second) {
+    return (first.x == second.x && first.y == second.y);
+}
+
+bool operator!=(const Vec2& first, const Vec2& second) {
+    return !(first == second);
+}
+
 Vec2 operator+(const Vec2& first, const Vec2& second) {
     Vec2 ret(first.x, first.y);
     ret.x += second.x;
