@@ -13,14 +13,14 @@ public:
     void normalize(double newlen);
 };
 
-Vec2 operator+(Vec2 first, Vec2 second);
+Vec2 operator+(const Vec2 first, const Vec2 second);
 Vec2 operator+=(Vec2& first, Vec2& second);
 
-Vec2 operator-(Vec2 first, Vec2 second);
+Vec2 operator-(const Vec2 first, const Vec2 second);
 Vec2 operator-=(Vec2& first, Vec2& second);
 
-Vec2 operator*(Vec2 vec, double factor);
+Vec2 operator*(const Vec2 vec, double factor);
 Vec2 operator*=(Vec2& vec, double factor);
 
-Vec2 operator/(Vec2 vec, double factor);
+Vec2 operator/(const Vec2 vec, double factor);
 Vec2 operator/=(Vec2& vec, double factor);
