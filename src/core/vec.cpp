@@ -1,6 +1,6 @@
 #include "vec.h"
 
-double Vec2::len() {
+double Vec2::len() const {
     return sqrt(x * x + y * y);
 }
 
