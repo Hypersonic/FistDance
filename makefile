@@ -6,6 +6,8 @@ INCLUDES = -Isrc/
 DIRS = 
 # Object files, by keeping the directory structure from src/ in obj/
 OBJS = $(patsubst src/core/%.cpp,obj/core/%.o, $(wildcard src/core/*.cpp) $(foreach d, $(DIRS), $(wildcard src/core/$(d)/*.cpp)))
+# Dependency files, used to automatically recompile a source if a header it depends on changes
+DEPS = $(OBJS:.o=.d)
 
 # Our compiler
 CXX = clang++
@@ -43,7 +45,7 @@ core: dirs $(OBJS)
 
 # Compile for each thing
 obj/%.o: src/%.cpp
-	$(CXX) $(FLAGS) -c -o $@ $< $(INCLUDES)
+	$(CXX) $(FLAGS) -c -MMD -MP $< -o $@ $(INCLUDES)
 
 # Create empty dirs if they don't exist
 dirs:
@@ -54,9 +56,11 @@ dirs:
 	done
 
 clean:
-	rm -f $(EXEC) $(OBJS) $(CORE_LIB)
+	rm -f $(EXEC) $(OBJS) $(DEPS) $(CORE_LIB)
 
 # Run
 # TODO: Make the dependency for this be the platform the user is on
 run: unix
 	./$(EXEC)
+
+-include $(DEPS)
