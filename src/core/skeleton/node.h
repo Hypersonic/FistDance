@@ -9,6 +9,7 @@ struct BodyInfo {};
 
 struct SkeletonNode {
     
+    SkeletonNode() {}
     SkeletonNode(RigidBodyTransform transform, BodyInfo info)
         : transform(transform), info(info) {}
 
