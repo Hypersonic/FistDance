@@ -10,7 +10,7 @@ void skel_parser::parse(char *fn, Skeleton *skel) {
 	while (skel_parser::split(fd, token_buffer)) {
 		for (int i = 0; i < 8; i++) {
 			if (token_buffer[i][0]) {
-				printf("%s\n", token_buffer[i]);
+				printf("%s ", token_buffer[i]);
 			}
 		}
 		printf("\n");
@@ -24,7 +24,8 @@ bool skel_parser::split(int fd, char **token_buffer) {
 	bool inWhitespace = false;
 
 	// zero start of token_buffer
-	token_buffer[0][0] = '\0';
+	for (int i = 0; i < 8; i++)
+		token_buffer[i][0] = '\0';
 
 	// trim starting whitespace
 	char c;
@@ -48,10 +49,8 @@ bool skel_parser::split(int fd, char **token_buffer) {
 				token_buffer[token_index][token_char] = '\0';
 				token_index++;
 				token_char = 0;
-			} else {
-				// still in a token
-				token_buffer[token_index][token_char++] = c;
 			}
+			token_buffer[token_index][token_char++] = c;
 		} else
 			inWhitespace = true;
 	}
