@@ -7,7 +7,7 @@
 #include "sdl_util.h"
 #include "hitmasks.h"
 #include "vec.h"
-#include "skeleton/node.h"
+#include "skeleton/skeleton.h"
 
 struct Hitbox {
 	Vec2 pos;
@@ -38,7 +38,7 @@ public:
     int jumpsLeft;
     int maxJumps;
 
-    SkeletonNode* skeleton;
+    Skeleton* skeleton;
 
     std::vector<Hitbox> hitboxes;
 
