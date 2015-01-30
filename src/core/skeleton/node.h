@@ -3,6 +3,7 @@
 #include <cstring> // For size_t
 #include <assert.h>
 
+// TODO: Fill these in (and possibly move them to another file)
 struct RigidBodyTransform {};
 struct BodyInfo {};
 
