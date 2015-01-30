@@ -12,11 +12,10 @@ struct SkeletonNode {
     SkeletonNode(RigidBodyTransform transform, BodyInfo info)
         : transform(transform), info(info) {}
 
-    // Push returns this, so you can chain pushes
-    SkeletonNode& push(int);
+    void push(int);
 
     size_t n_children = 0;
-    int children[256];
+    int children[256]; // Indecies of child nodes in the parent Skeleton's list
 
     RigidBodyTransform transform;
     BodyInfo info;
