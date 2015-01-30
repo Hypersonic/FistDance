@@ -2,6 +2,8 @@
 
 Simulation::Simulation() {
     characters.push_back(Character(100, 100));
+	skel_parser::parse("res/skeletons/human.skel", characters[0].skeleton);
+
     for (int i = 0; i < 5; i++) {
         Character* charlie = new Character(200 + i * 200, 100);
         charlie->ctrl_vel.x = rand() % 10;
