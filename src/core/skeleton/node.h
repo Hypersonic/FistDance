@@ -3,8 +3,13 @@
 #include <cstring> // For size_t
 #include <assert.h>
 
-// TODO: Fill these in (and possibly move them to another file)
-struct RigidBodyTransform {};
+#include "../vec.h"
+
+struct RigidBodyTransform {
+	Vec2 trans;
+	double rot;
+};
+
 struct BodyInfo {};
 
 struct SkeletonNode {
