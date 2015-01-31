@@ -10,8 +10,8 @@ Character::Character(double x, double y) {
 
     speed = 5;
 
-    hitboxes.push_back(Hitbox(0, 0, 10, false));
-    hitboxes.push_back(Hitbox(10, 10, 10, false));
+	skel_parser::parse("res/skeletons/human.skel", skeleton);
+	bakeHitboxes();
 }
 
 Character::Character(Vec2 pos) {
@@ -24,8 +24,20 @@ Character::Character(Vec2 pos) {
 
     speed = 5;
 
-    hitboxes.push_back(Hitbox(0, 0, 10, false));
-    hitboxes.push_back(Hitbox(10, 10, 10, false));
+	skel_parser::parse("res/skeletons/human.skel", skeleton);
+	bakeHitboxes();
+}
+
+void Character::bakeHitboxes() {
+	for (int i = 0; i < skeleton.n_nodes; i++) {
+		SkeletonNode &node = skeleton.nodes[i];
+
+		if (node.info.hittable) {
+			hitboxes.push_back(Hitbox(node.transform.trans,
+			                          node.info.rad,
+			                          node.info.hittable & HTBX_FIST));
+		}
+	}
 }
 
 void Character::render(SDL_Surface *drawSurface) {

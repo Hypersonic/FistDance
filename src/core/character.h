@@ -8,6 +8,7 @@
 #include "hitmasks.h"
 #include "vec.h"
 #include "skeleton/skeleton.h"
+#include "skeleton-parser/parser.h"
 
 struct Hitbox {
 	Vec2 pos;
@@ -45,6 +46,7 @@ public:
     Character(double, double);
     Character(Vec2);
 
+	void bakeHitboxes();
     bool hittingPlatform();
 
     void render(SDL_Surface *);
