@@ -5,12 +5,19 @@
 
 #include "../vec.h"
 
+#define HTBX_HTBX 1
+#define HTBX_FIST 3
+#define HTBX_HTPT 0
+
 struct RigidBodyTransform {
 	Vec2 trans;
 	double rot;
 };
 
-struct BodyInfo {};
+struct BodyInfo {
+	int hittable;
+	double rad;
+};
 
 struct SkeletonNode {
     SkeletonNode() {}

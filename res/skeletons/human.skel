@@ -1,8 +1,11 @@
 node
+rad 5
 
 node
 trans 10 10
+rad 3
 ascend
 
 node
 trans -10 10
+rad 3

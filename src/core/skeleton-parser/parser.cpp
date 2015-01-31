@@ -67,6 +67,17 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 			}
 
 			cur_node = skel.nodes[cur_node].parent;
+		} else if (strcmp(token_buffer[0], "rad") == 0) {
+			printf("setting radius\n");
+			if (cur_node < 0) {
+				printf("error: tried to set rad before making a node\n");
+				continue;
+			}
+
+			SkeletonNode &node = skel.nodes[cur_node];
+			node.info.hittable = HTBX_HTBX | HTBX_HTPT;
+			node.info.rad = strtod(token_buffer[1], NULL);
+			printf("\n");
 		}
 	}
 }
