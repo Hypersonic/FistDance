@@ -16,6 +16,58 @@ void putPixel(SDL_Surface *drawSurface, int x, int y, Uint32 color) {
     *((Uint32 *)pixel) = color;
 }
 
+void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 d1, Uint32 col) {
+	Vec2 pos1;
+	Vec2 pos2;
+
+	lockSurface(drawSurface);
+	if (abs(v2.x - v1.x) > abs(v2.y - v1.y)) {
+		if (v1.x < v2.x) {
+			pos1 = p1;
+			pos2 = p2;
+		} else {
+			pos1 = p2;
+			pos2 = p1;
+		}
+
+		putPixel(drawSurface, pos1.x, pos1.y, color);
+
+		double slope = (pos2.y - pos1.y) / (pos2.x - pos1.x);
+		int curY = pos1.y;
+		for (int x = pos1.x + 1; x <= pos2.x; x++) {
+			double nextY = pos1.y + slope * (x - pos1.x);
+
+			if (slope > 0 && nextY - curY > 0.5) curY++;
+			else if (slope < 0 && nextY - curY < -0.5) curY--;
+
+			putPixel(drawSurface, x, curY, color);
+		}
+	} else {
+		if (v1.y < v2.y) {
+			pos1 = v1;
+			pos2 = v2;
+		} else {
+			pos1 = v2;
+			pos2 = v1;
+		}
+
+		putPixel(drawSurface, pos1.x, pos1.y, color);
+
+		double slope = (pos2.x - pos1.x) / (pos2.y - pos1.y);
+		int curX = pos1.x;
+		for (int y = pos1.y + 1; y <= pos2.y; y++) {
+			double nextX = pos1.x + slope * (y - pos1.y);
+
+			if (slope > 0 && nextX - curX > 0.5) curX++;
+			else if (slope < 0 && nextX - curX < -0.5) curX--;
+
+			putPixel(drawSurface, curX, y, color);
+		}
+	}
+
+	unlockSurface(drawSurface);
+}
+
 void fillRect(SDL_Surface *drawSurface, Vec2 pos, Vec2 dim, Uint32 col) {
     SDL_Rect rect;
     rect.x = pos.x;

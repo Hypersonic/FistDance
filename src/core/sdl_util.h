@@ -9,6 +9,7 @@
 void putPixel(SDL_Surface *, int, int, Uint32);
 void lockSurface(SDL_Surface *);
 void unlockSurface(SDL_Surface *);
+void drawLine(SDL_Surface *, Vec2, Vec2, Uint32);
 void fillRect(SDL_Surface *, Vec2, Vec2, Uint32);
 void drawCircle(SDL_Surface *, double, double, double, Uint32);
 void fillCircle(SDL_Surface *, double, double, double, Uint32);
