@@ -10,7 +10,7 @@
 
 namespace skel_parser {
 	// parse skel file fn and creates skel
-	void parse(char *, Skeleton *);
+	void parse(char *, Skeleton &);
 	bool split(int, char **);
 
 	bool isBlank(char *);

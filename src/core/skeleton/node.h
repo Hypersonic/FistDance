@@ -8,15 +8,16 @@ struct RigidBodyTransform {};
 struct BodyInfo {};
 
 struct SkeletonNode {
-    
     SkeletonNode() {}
-    SkeletonNode(RigidBodyTransform transform, BodyInfo info)
-        : transform(transform), info(info) {}
+    SkeletonNode(int parent, RigidBodyTransform transform, BodyInfo info)
+        : parent(parent), transform(transform), info(info) {}
 
     void push(int);
 
+    // Indices of child nodes in the parent Skeleton's list
     size_t n_children = 0;
-    int children[256]; // Indecies of child nodes in the parent Skeleton's list
+    int children[256]; 
+    int parent;
 
     RigidBodyTransform transform;
     BodyInfo info;

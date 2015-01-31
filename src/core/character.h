@@ -38,7 +38,7 @@ public:
     int jumpsLeft;
     int maxJumps;
 
-    Skeleton* skeleton;
+    Skeleton skeleton;
 
     std::vector<Hitbox> hitboxes;
 
