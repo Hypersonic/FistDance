@@ -1,8 +1,8 @@
 node
 
 node
-trans 20 20
+trans 10 10
 ascend
 
 node
-trans -20 20
+trans -10 10

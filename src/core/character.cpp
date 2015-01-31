@@ -63,7 +63,7 @@ void Character::renderNode(SDL_Surface *drawSurface, int node_i) {
 		Vec2 p2(pos);
 		p2 += skeleton.nodes[node.children[i]].transform.trans;
 
-		drawLine(drawSurface, p1, p2, 0xff << 16);
+		drawLine(drawSurface, p1, p2, 0xffff00);
 	}
 }
 
