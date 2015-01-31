@@ -16,13 +16,13 @@ void putPixel(SDL_Surface *drawSurface, int x, int y, Uint32 color) {
     *((Uint32 *)pixel) = color;
 }
 
-void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 d1, Uint32 col) {
+void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
 	Vec2 pos1;
 	Vec2 pos2;
 
 	lockSurface(drawSurface);
-	if (abs(v2.x - v1.x) > abs(v2.y - v1.y)) {
-		if (v1.x < v2.x) {
+	if (abs(p2.x - p1.x) > abs(p2.y - p1.y)) {
+		if (p1.x < p2.x) {
 			pos1 = p1;
 			pos2 = p2;
 		} else {
@@ -43,12 +43,12 @@ void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 d1, Uint32 col) {
 			putPixel(drawSurface, x, curY, color);
 		}
 	} else {
-		if (v1.y < v2.y) {
-			pos1 = v1;
-			pos2 = v2;
+		if (p1.y < p2.y) {
+			pos1 = p1;
+			pos2 = p2;
 		} else {
-			pos1 = v2;
-			pos2 = v1;
+			pos1 = p2;
+			pos2 = p1;
 		}
 
 		putPixel(drawSurface, pos1.x, pos1.y, color);

@@ -47,7 +47,8 @@ public:
 
     bool hittingPlatform();
 
-    void render(SDL_Surface *drawSurface);
+    void render(SDL_Surface *);
+    void renderNode(SDL_Surface *, int);
     void up(const bool);
     void down(const bool);
     void left(const bool);

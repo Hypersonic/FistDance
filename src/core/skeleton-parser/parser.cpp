@@ -35,8 +35,9 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 
 			// set node translate
 			SkeletonNode &node = skel.nodes[cur_node];
-			sscanf(token_buffer[1], "%f", &node.transform.trans.x);
-			sscanf(token_buffer[2], "%f", &node.transform.trans.y);
+			node.transform.trans.x = strtod(token_buffer[1], NULL);
+			node.transform.trans.y = strtod(token_buffer[2], NULL);
+			printf("\n");
 		} else if (strcmp(token_buffer[0], "rot") == 0) {
 			printf("rotating\n");
 			if (cur_node < 0) {

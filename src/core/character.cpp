@@ -50,6 +50,21 @@ void Character::render(SDL_Surface *drawSurface) {
             fillCircle(drawSurface, hb_pos.x, hb_pos.y, hb.rad, color);
         }
     }
+
+	renderNode(drawSurface, 0);
+}
+
+void Character::renderNode(SDL_Surface *drawSurface, int node_i) {
+	SkeletonNode &node = skeleton.nodes[node_i];
+
+	for (int i = 0; i < node.n_children; i++) {
+		Vec2 p1(pos);
+		p1 += node.transform.trans;
+		Vec2 p2(pos);
+		p2 += skeleton.nodes[node.children[i]].transform.trans;
+
+		drawLine(drawSurface, p1, p2, 0xff << 16);
+	}
 }
 
 bool Character::hittingPlatform() {
