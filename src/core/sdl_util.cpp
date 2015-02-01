@@ -18,6 +18,7 @@ void putPixel(SDL_Surface *drawSurface, int x, int y, Uint32 color) {
 }
 
 void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
+	printf("started\n");
 	Vec2 pos1;
 	Vec2 pos2;
 
@@ -31,16 +32,17 @@ void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
 			pos2 = p1;
 		}
 
-		putPixel(drawSurface, pos1.x, pos1.y, color);
-
 		double slope = (pos2.y - pos1.y) / (pos2.x - pos1.x);
 		int curY = pos1.y;
-		for (int x = pos1.x + 1; x <= pos2.x; x++) {
+		// clamp to surface
+		pos2.x = fmin(pos2.x, drawSurface->w - 1);
+		for (int x = pos1.x; x <= pos2.x; x++) {
 			double nextY = pos1.y + slope * (x - pos1.x);
 
 			if (slope > 0 && nextY - curY > 0.5) curY++;
 			else if (slope < 0 && nextY - curY < -0.5) curY--;
 
+			printf("x: %i %i\n", x, curY);
 			putPixel(drawSurface, x, curY, color);
 		}
 	} else {
@@ -52,19 +54,20 @@ void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
 			pos2 = p1;
 		}
 
-		putPixel(drawSurface, pos1.x, pos1.y, color);
-
 		double slope = (pos2.x - pos1.x) / (pos2.y - pos1.y);
 		int curX = pos1.x;
-		for (int y = pos1.y + 1; y <= pos2.y; y++) {
+		pos2.y = fmin(pos2.y, drawSurface->h - 1); // clamp to surface
+		for (int y = pos1.y; y <= pos2.y; y++) {
 			double nextX = pos1.x + slope * (y - pos1.y);
 
 			if (slope > 0 && nextX - curX > 0.5) curX++;
 			else if (slope < 0 && nextX - curX < -0.5) curX--;
 
+			printf("y: %i %i\n", curX, y);
 			putPixel(drawSurface, curX, y, color);
 		}
 	}
+	printf("done\n");
 
 	unlockSurface(drawSurface);
 }
