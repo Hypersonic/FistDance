@@ -1,24 +1,48 @@
+# torso
 node
 rad 4
 
-# right leg
-node
-trans 10 10
-rad 3
+	node
+	trans 0 8
+	rad 3
 
-node
-trans 0 10
-rad 4
-ascend
-ascend
+		# right leg
+		node
+		trans 6 10
+		rad 3
 
-# left leg
-node
-trans -10 10
-rad 3
+			node
+			trans 2 10
+			rad 4
+			ascend
+		ascend
 
-node
-trans 0 10
-rad 4
-ascend
-ascend
+		# left leg
+		node
+		trans -6 10
+		rad 3
+
+			node
+			trans -2 10
+			rad 4
+			ascend
+		ascend
+	ascend
+
+	# head
+	node
+	trans 0 -10
+	rad 4
+	ascend
+
+	# left arm
+	node
+	trans -8 2
+	rad 3
+	ascend
+
+	# right arm
+	node
+	trans 8 2
+	rad 3
+	ascend
