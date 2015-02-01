@@ -5,6 +5,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "vec.h"
+#include "util.h"
 
 void putPixel(SDL_Surface *, int, int, Uint32);
 void lockSurface(SDL_Surface *);
