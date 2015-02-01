@@ -1,11 +1,24 @@
 node
-rad 5
+rad 4
 
+# right leg
 node
 trans 10 10
 rad 3
+
+node
+trans 0 10
+rad 4
+ascend
 ascend
 
+# left leg
 node
 trans -10 10
 rad 3
+
+node
+trans 0 10
+rad 4
+ascend
+ascend

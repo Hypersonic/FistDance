@@ -29,14 +29,20 @@ Character::Character(Vec2 pos) {
 }
 
 void Character::bakeHitboxes() {
-	for (int i = 0; i < skeleton.n_nodes; i++) {
-		SkeletonNode &node = skeleton.nodes[i];
+	bakeHitboxes(Vec2(0, 0), 0);
+}
 
-		if (node.info.hittable) {
-			hitboxes.push_back(Hitbox(node.transform.trans,
-			                          node.info.rad,
-			                          node.info.hittable & HTBX_FIST));
-		}
+void Character::bakeHitboxes(Vec2 trans, int ni) {
+	SkeletonNode &node = skeleton.nodes[ni];
+	trans += node.transform.trans;
+
+	if (node.info.hittable) {
+		hitboxes.push_back(Hitbox(trans, node.info.rad,
+	                          	  node.info.hittable & HTBX_FIST));
+	}
+
+	for (int i = 0; i < node.n_children; i++) {
+		bakeHitboxes(trans, node.children[i]);
 	}
 }
 
@@ -63,19 +69,21 @@ void Character::render(SDL_Surface *drawSurface) {
         }
     }
 
-	renderNode(drawSurface, 0);
+	renderNode(drawSurface, pos, 0);
 }
 
-void Character::renderNode(SDL_Surface *drawSurface, int node_i) {
-	SkeletonNode &node = skeleton.nodes[node_i];
+void Character::renderNode(SDL_Surface *drawSurface, Vec2 n_pos, int ni) {
+	SkeletonNode &node = skeleton.nodes[ni];
+	n_pos += node.transform.trans;
 
 	for (int i = 0; i < node.n_children; i++) {
-		Vec2 p1(pos);
-		p1 += node.transform.trans;
-		Vec2 p2(pos);
-		p2 += skeleton.nodes[node.children[i]].transform.trans;
+		SkeletonNode &child = skeleton.nodes[node.children[i]];
 
-		drawLine(drawSurface, p1, p2, 0xffff00);
+		Vec2 p2(n_pos);
+		p2 += child.transform.trans;
+
+		drawLine(drawSurface, n_pos, p2, 0xffff00);
+		renderNode(drawSurface, n_pos, node.children[i]);
 	}
 }
 

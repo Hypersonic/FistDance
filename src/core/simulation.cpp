@@ -5,7 +5,7 @@ Simulation::Simulation() {
 
     for (int i = 0; i < 5; i++) {
         Character* charlie = new Character(200 + i * 200, 100);
-        charlie->ctrl_vel.x = rand() % 10;
+        //charlie->ctrl_vel.x = rand() % 10;
         charlie->ctrl_vel.y = rand() % 10;
         charlie->speed = .5;
         characters.push_back(*charlie);

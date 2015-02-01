@@ -47,10 +47,11 @@ public:
     Character(Vec2);
 
 	void bakeHitboxes();
+	void bakeHitboxes(Vec2, int);
     bool hittingPlatform();
 
     void render(SDL_Surface *);
-    void renderNode(SDL_Surface *, int);
+    void renderNode(SDL_Surface *, Vec2, int);
     void up(const bool);
     void down(const bool);
     void left(const bool);
