@@ -116,13 +116,16 @@ void drawCircle(SDL_Surface *drawSurface,
 void wikiFillCircle(SDL_Surface *drawSurface,
                     double x0, double y0, double rad, Uint32 color) {
     lockSurface(drawSurface);
-    for (double dy = 1; dy <= rad; dy += 1.) {
-        double dx = sqrt(2 * rad * dy - dy * dy);
-        int x = x0 - dx;
+    int min_y = fmax(0, y0 - rad);
+    int max_y = fmin(drawSurface->h, y0 + rad);
+    for (int dy = min_y - y0; dy < max_y - y0; dy += 1) {
+        int edge_dist = rad - dy;
+        double dx = sqrt(2 * rad * edge_dist - edge_dist * edge_dist);
 
-        for (; x <= x0 + dx; x++) {
-            putPixel(drawSurface, x, y0 + rad - dy, color);
-            putPixel(drawSurface, x, y0 - rad + dy, color);
+        int min_x = fmax(0, x0 - dx);
+        int max_x = fmin(drawSurface->pitch - 1, x0 + dx);
+        for (int x = min_x; x <= max_x; x++) {
+            putPixel(drawSurface, x, (int)y0 + dy, color);
         }
     }
     unlockSurface(drawSurface);
