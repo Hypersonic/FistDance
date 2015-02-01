@@ -12,8 +12,8 @@ void unlockSurface(SDL_Surface *surface) {
 
 void putPixel(SDL_Surface *drawSurface, int x, int y, Uint32 color) {
     Uint8 *pixel = (Uint8 *)drawSurface->pixels;
-    pixel += clamp(static_cast<int>(y), 0, drawSurface->h) * drawSurface->pitch
-        + clamp(static_cast<int>(x), 0, drawSurface->w) * sizeof(Uint32);
+    pixel += clamp(y, 0, drawSurface->h - 1) * drawSurface->pitch
+        + clamp(x, 0, drawSurface->w - 1) * sizeof(Uint32);
     *((Uint32 *)pixel) = color;
 }
 
