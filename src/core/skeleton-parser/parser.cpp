@@ -11,7 +11,6 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 
 	int cur_node = -1;
 
-	printf("wat\n");
 	// scan each line
 	while (skel_parser::split(fp, token_buffer)) {
 		if (strcmp(token_buffer[0], "node") == 0) {
