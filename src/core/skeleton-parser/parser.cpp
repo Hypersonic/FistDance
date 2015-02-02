@@ -1,17 +1,19 @@
 #include "parser.h"
 
+int dont_touch_this = 0;
+
 // parse skel file fn and creates skel
 void skel_parser::parse(char *fn, Skeleton &skel) {
-	int fd = open(fn, O_RDONLY);
+	FILE *fp = fopen(fn, "r");
 	char **token_buffer = new char *[8];
 	for (int i = 0; i < 8; i++) token_buffer[i] = new char [16];
 	char *command;
 
 	int cur_node = -1;
 
+	printf("wat\n");
 	// scan each line
-	while (skel_parser::split(fd, token_buffer)) {
-		printf("asdf\n");
+	while (skel_parser::split(fp, token_buffer)) {
 		if (strcmp(token_buffer[0], "node") == 0) {
 			if (cur_node < 0) {
 				SkeletonNode &node = skel.nodes[skel.n_nodes++];
@@ -70,12 +72,11 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 			SkeletonNode &node = skel.nodes[cur_node];
 			node.info.hittable = HTBX_HTBX | HTBX_HTPT;
 			node.info.rad = strtod(token_buffer[1], NULL);
-			printf("\n");
 		}
 	}
 }
 
-bool skel_parser::split(int fd, char **token_buffer) {
+bool skel_parser::split(FILE *fp, char **token_buffer) {
 	// split line into tokens
 	int token_index = 0;
 	int token_char = 0;
@@ -87,13 +88,17 @@ bool skel_parser::split(int fd, char **token_buffer) {
 
 	// trim starting whitespace
 	char c;
-	read(fd, &c, 1);
-	for (; isspace(c) && c != '\n'; read(fd, &c, 1));
-	if (c == EOF || c == '\0') return false;
-	if (c == '\n') return true;
+	c = getc(fp);
+	for (; isspace(c) && c != '\n'; c = getc(fp));
+	if (c == EOF || c == '\0') {
+		return false;
+	}
+	if (c == '\n') {
+		return true;
+	}
 
 	// read and tokenize
-	for (; c && c != '#' && c != '\n'; read(fd, &c, 1)) {
+	for (; c && c != '#' && c != '\n'; c = getc(fp)) {
 		// parse for tokens
 		if (!isspace(c)) {
 			if (inWhitespace) {
@@ -107,6 +112,10 @@ bool skel_parser::split(int fd, char **token_buffer) {
 		} else
 			inWhitespace = true;
 	}
+
+	// ignore rest of commented line
+	if (c == '#') while (c != '\n' && c != EOF) c = getc(fp);
+
 	token_buffer[token_index][token_char] = '\0';
 	token_buffer[++token_index][0] = '\0';
 
