@@ -18,7 +18,6 @@ void putPixel(SDL_Surface *drawSurface, int x, int y, Uint32 color) {
 }
 
 void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
-	printf("started\n");
 	Vec2 pos1;
 	Vec2 pos2;
 
@@ -42,7 +41,6 @@ void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
 			if (slope > 0 && nextY - curY > 0.5) curY++;
 			else if (slope < 0 && nextY - curY < -0.5) curY--;
 
-			printf("x: %i %i\n", x, curY);
 			putPixel(drawSurface, x, curY, color);
 		}
 	} else {
@@ -63,11 +61,9 @@ void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
 			if (slope > 0 && nextX - curX > 0.5) curX++;
 			else if (slope < 0 && nextX - curX < -0.5) curX--;
 
-			printf("y: %i %i\n", curX, y);
 			putPixel(drawSurface, curX, y, color);
 		}
 	}
-	printf("done\n");
 
 	unlockSurface(drawSurface);
 }
