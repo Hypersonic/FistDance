@@ -59,7 +59,6 @@ void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
 			putPixel(drawSurface, x, curY, color);
 		}
 	} else {
-		printf("starting\n");
 		if (p1.y < p2.y) {
 			pos1 = p1;
 			pos2 = p2;
@@ -95,7 +94,6 @@ void drawLine(SDL_Surface *drawSurface, Vec2 p1, Vec2 p2, Uint32 color) {
 
 			putPixel(drawSurface, curX, y, color);
 		}
-		printf("ending\n\n");
 	}
 	unlockSurface(drawSurface);
 }
