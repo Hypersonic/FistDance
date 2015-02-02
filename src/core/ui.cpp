@@ -25,7 +25,7 @@ void UI::render() {
     lockSurface(drawSurface);
     for (int i = 0; i < canvasHeight; i++) {
         for (int j = 0; j < canvasWidth; j++) {
-            Uint32 color = -(int)fmax(i % 0xff, j % 0xff) << 16;
+            Uint32 color = 0;
             putPixel(drawSurface, j, i, color);
         }
     }
