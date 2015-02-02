@@ -11,14 +11,13 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 
 	// scan each line
 	while (skel_parser::split(fd, token_buffer)) {
+		printf("asdf\n");
 		if (strcmp(token_buffer[0], "node") == 0) {
 			if (cur_node < 0) {
-				printf("adding first node\n");
 				SkeletonNode &node = skel.nodes[skel.n_nodes++];
 				node.parent = -1; // indicate no parent
 				cur_node = 0;
 			} else {
-				printf("adding another node\n");
 				SkeletonNode &node = skel.nodes[cur_node];
 				int new_node = skel.n_nodes++;
 
@@ -27,7 +26,6 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 				cur_node = new_node;
 			}
 		} else if (strcmp(token_buffer[0], "trans") == 0) {
-			printf("translating\n");
 			if (cur_node < 0) {
 				printf("error: tried to translate before making a node\n");
 				continue;
@@ -37,9 +35,7 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 			SkeletonNode &node = skel.nodes[cur_node];
 			node.transform.trans.x = strtod(token_buffer[1], NULL);
 			node.transform.trans.y = strtod(token_buffer[2], NULL);
-			printf("\n");
 		} else if (strcmp(token_buffer[0], "rot") == 0) {
-			printf("rotating\n");
 			if (cur_node < 0) {
 				printf("error: tried to rotate before making a node\n");
 				continue;
@@ -49,7 +45,6 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 			SkeletonNode &node = skel.nodes[cur_node];
 			sscanf(token_buffer[1], "%d", &node.transform.rot);
 		} else if (strcmp(token_buffer[0], "name") == 0) {
-			printf("naming\n");
 			if (cur_node < 0) {
 				printf("error: tried to name before making a node\n");
 				continue;
@@ -57,7 +52,6 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 
 			// TODO add node naming
 		} else if (strcmp(token_buffer[0], "ascend") == 0) {
-			printf("ascending\n");
 			if (cur_node < 0) {
 				printf("error: tried to ascend before making a node\n");
 				continue;
@@ -68,7 +62,6 @@ void skel_parser::parse(char *fn, Skeleton &skel) {
 
 			cur_node = skel.nodes[cur_node].parent;
 		} else if (strcmp(token_buffer[0], "rad") == 0) {
-			printf("setting radius\n");
 			if (cur_node < 0) {
 				printf("error: tried to set rad before making a node\n");
 				continue;
@@ -96,16 +89,11 @@ bool skel_parser::split(int fd, char **token_buffer) {
 	char c;
 	read(fd, &c, 1);
 	for (; isspace(c) && c != '\n'; read(fd, &c, 1));
-	if (c == '\0') return false;
+	if (c == EOF || c == '\0') return false;
 	if (c == '\n') return true;
 
 	// read and tokenize
-	for (; c; read(fd, &c, 1)) {
-		// end on comments and newlines
-		if (!c || c == '#' || c == '\n') {
-			break;
-		}
-
+	for (; c && c != '#' && c != '\n'; read(fd, &c, 1)) {
 		// parse for tokens
 		if (!isspace(c)) {
 			if (inWhitespace) {
