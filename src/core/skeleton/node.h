@@ -20,10 +20,6 @@ struct BodyInfo {
 };
 
 struct SkeletonNode {
-    SkeletonNode() {}
-    SkeletonNode(int parent, RigidBodyTransform transform, BodyInfo info)
-        : parent(parent), transform(transform), info(info) {}
-
     void push(int);
 
     // Indices of child nodes in the parent Skeleton's list
