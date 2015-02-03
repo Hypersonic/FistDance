@@ -7,5 +7,5 @@
 
 struct Skeleton {
     size_t n_nodes;
-    SkeletonNode nodes[256];
+    SkeletonNode nodes[32];
 };
