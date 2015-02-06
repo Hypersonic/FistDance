@@ -8,7 +8,7 @@
 #include "hitmasks.h"
 #include "vec.h"
 #include "skeleton/skeleton.h"
-#include "skeleton-parser/parser.h"
+#include "parser/skeleton/parser.h"
 
 struct Hitbox {
 	Vec2 pos;

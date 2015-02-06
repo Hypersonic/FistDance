@@ -1,0 +1,11 @@
+frame <time>
+node <number/name>
+trans <x y>
+rot <theta>
+
+node ..
+.
+.
+frame ..
+.
+.
