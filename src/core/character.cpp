@@ -10,7 +10,7 @@ Character::Character(double x, double y) {
 
     speed = 5;
 
-	skel_parser::parse("res/skeletons/human.skel", skeleton);
+	skel_parse("res/skeletons/human.skel", skeleton);
 	bakeHitboxes();
 }
 
@@ -24,7 +24,7 @@ Character::Character(Vec2 pos) {
 
     speed = 5;
 
-	skel_parser::parse("res/skeletons/human.skel", skeleton);
+	skel_parse("res/skeletons/human.skel", skeleton);
 	bakeHitboxes();
 }
 

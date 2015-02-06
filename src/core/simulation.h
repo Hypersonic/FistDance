@@ -7,7 +7,7 @@
 #include "character.h"
 #include "platform.h"
 #include "hitmasks.h"
-#include "skeleton-parser/parser.h"
+#include "parser/skeleton/parser.h"
 
 // Holds all world state, handles updating it
 class Simulation {
