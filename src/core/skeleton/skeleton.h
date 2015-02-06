@@ -6,6 +6,6 @@
 #include "node.h"
 
 struct Skeleton {
-    size_t n_nodes;
+    size_t n_nodes = 0;
     SkeletonNode nodes[32];
 };
