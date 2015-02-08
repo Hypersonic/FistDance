@@ -3,7 +3,7 @@ MACHINE = $(shell uname -s)
 # Our source, so we can include relative to src/
 INCLUDES = -Isrc/
 # Directories inside src that we should look in for compilation
-DIRS = skeleton parser parser/skeleton parser/animation
+DIRS = skeleton animation parser parser/skeleton parser/animation
 # Object files, by keeping the directory structure from src/ in obj/
 OBJS = $(patsubst src/core/%.cpp,obj/core/%.o, $(wildcard src/core/*.cpp) $(foreach d, $(DIRS), $(wildcard src/core/$(d)/*.cpp)))
 # Dependency files, used to automatically recompile a source if a header it depends on changes
