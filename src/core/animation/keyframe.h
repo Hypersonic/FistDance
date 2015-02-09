@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 #include "../skeleton/node.h"
 
 struct KeyFrame {
