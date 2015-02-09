@@ -4,5 +4,5 @@
 
 struct KeyFrame {
     double frame; // The starting frame of the animation
-    RigidBodyTransform trans;
+    std::map<std::string, RigidBodyTransform> transformations;
 };
