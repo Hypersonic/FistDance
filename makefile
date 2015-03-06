@@ -57,6 +57,8 @@ dirs:
 
 clean:
 	rm -f $(EXEC) $(OBJS) $(DEPS) $(CORE_LIB)
+	rm -rf $(EXEC).dSYM
+	rm -rf obj
 
 # Run
 # TODO: Make the dependency for this be the platform the user is on
