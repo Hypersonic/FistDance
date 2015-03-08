@@ -17,7 +17,11 @@ void skel_parse(char *fn, Skeleton &skel) {
 				SkeletonNode &node = skel.nodes[skel.n_nodes++];
 				node.parent = -1; // indicate no parent
 				cur_node = 0;
+
+				name(skel, cur_node, "root");
+				name(skel, cur_node, token_buffer[1]);
 			} else {
+				// tried to do something before having a node
 				printf("error: tried to %s before making a node\n",
 				       token_buffer[0]);
 			}
@@ -32,6 +36,8 @@ void skel_parse(char *fn, Skeleton &skel) {
 			node.push(new_node);
 			skel.nodes[new_node].parent = cur_node;
 			cur_node = new_node;
+
+			name(skel, cur_node, token_buffer[1]);
 		} else if (strcmp(token_buffer[0], "trans") == 0) {
 			// set node translate
 			SkeletonNode &node = skel.nodes[cur_node];
@@ -41,16 +47,6 @@ void skel_parse(char *fn, Skeleton &skel) {
 			// set node rot
 			SkeletonNode &node = skel.nodes[cur_node];
 			sscanf(token_buffer[1], "%d", &node.transform.rot);
-		} else if (strcmp(token_buffer[0], "name") == 0) {
-			// name node
-			if (skel.names.count(token_buffer[1]) > 0) {
-				// name is in use
-				printf("error: name '%s' already in use\n",
-				       token_buffer[1]);
-				continue;
-			}
-
-			skel.names[token_buffer[1]] = cur_node;
 		} else if (strcmp(token_buffer[0], "ascend") == 0) {
 			if (cur_node == 0) {
 				printf("error: tried to ascend while at top node\n");
@@ -68,4 +64,15 @@ void skel_parse(char *fn, Skeleton &skel) {
 			printf("error: command %s not recognized\n", token_buffer[0]);
 		}
 	}
+}
+
+void name(Skeleton &skel, size_t node_num, char *name) {
+	// name node
+	if (skel.names.count(name) > 0) {
+		// name is in use
+		printf("error: name '%s' already in use\n", name);
+		return;
+	}
+
+	skel.names[name] = node_num;
 }

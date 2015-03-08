@@ -8,3 +8,4 @@
 
 // parse skel file fn and create skel
 void skel_parse(char *, Skeleton &);
+void name(Skeleton &, size_t, char *);
