@@ -13,10 +13,12 @@ void skel_parse(char *fn, Skeleton &skel) {
 	while (parse_split(fp, token_buffer)) {
 		if (strcmp(token_buffer[0], "node") == 0) {
 			if (cur_node < 0) {
+				// first node
 				SkeletonNode &node = skel.nodes[skel.n_nodes++];
 				node.parent = -1; // indicate no parent
 				cur_node = 0;
 			} else {
+				// any other node
 				SkeletonNode &node = skel.nodes[cur_node];
 				int new_node = skel.n_nodes++;
 
@@ -40,7 +42,7 @@ void skel_parse(char *fn, Skeleton &skel) {
 				continue;
 			}
 
-			// set node translate
+			// set node rot
 			SkeletonNode &node = skel.nodes[cur_node];
 			sscanf(token_buffer[1], "%d", &node.transform.rot);
 		} else if (strcmp(token_buffer[0], "name") == 0) {
