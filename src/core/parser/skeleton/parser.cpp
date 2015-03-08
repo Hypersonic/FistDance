@@ -55,6 +55,8 @@ void skel_parse(char *fn, Skeleton &skel) {
 			SkeletonNode &node = skel.nodes[cur_node];
 			node.info.hittable = HTBX_HTBX | HTBX_HTPT;
 			node.info.rad = strtod(token_buffer[1], NULL);
+		} else if (strlen(token_buffer[0]) > 0) {
+			printf("error: command %s not recognized\n", token_buffer[0]);
 		}
 	}
 }
