@@ -2,7 +2,7 @@
 node torso
 rad 4
 
-	node
+	node hips
 	trans 0 8
 	rad 3
 
