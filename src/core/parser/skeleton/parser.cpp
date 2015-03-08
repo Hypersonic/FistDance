@@ -42,6 +42,15 @@ void skel_parse(char *fn, Skeleton &skel) {
 			SkeletonNode &node = skel.nodes[cur_node];
 			sscanf(token_buffer[1], "%d", &node.transform.rot);
 		} else if (strcmp(token_buffer[0], "name") == 0) {
+			// name node
+			if (skel.names.count(token_buffer[1]) > 0) {
+				// name is in use
+				printf("error: name '%s' already in use\n",
+				       token_buffer[1]);
+				continue;
+			}
+
+			skel.names[token_buffer[1]] = cur_node;
 		} else if (strcmp(token_buffer[0], "ascend") == 0) {
 			if (cur_node == 0) {
 				printf("error: tried to ascend while at top node\n");

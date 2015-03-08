@@ -1,5 +1,5 @@
 # torso
-node
+node torso
 rad 4
 
 	node
@@ -7,22 +7,22 @@ rad 4
 	rad 3
 
 		# right leg
-		node
+		node rleg
 		trans 6 10
 		rad 3
 
-			node
+			node rfoot
 			trans 2 10
 			rad 4
 			ascend
 		ascend
 
 		# left leg
-		node
+		node lleg
 		trans -6 10
 		rad 3
 
-			node
+			node lfoot
 			trans -2 10
 			rad 4
 			ascend
@@ -30,19 +30,19 @@ rad 4
 	ascend
 
 	# head
-	node
+	node head
 	trans 0 -10
 	rad 4
 	ascend
 
 	# left arm
-	node
+	node larm
 	trans -8 2
 	rad 3
 	ascend
 
 	# right arm
-	node
+	node rarm
 	trans 8 2
 	rad 3
 	ascend
