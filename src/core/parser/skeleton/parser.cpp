@@ -67,10 +67,6 @@ void skel_parse(char *fn, Skeleton &skel) {
 		}
 	}
 
-	for (int i = 0; i < skel.n_nodes; i++) {
-		if (isnan(skel.nodes[i].info.rad))
-			printf("%i\n", i);
-	}
 	fclose(fp);
 }
 
