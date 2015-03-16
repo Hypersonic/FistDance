@@ -25,6 +25,8 @@ void skel_parse(char *fn, Skeleton &skel) {
 				printf("error: tried to %s before making a node\n",
 				       token_buffer[0]);
 			}
+
+			parse_split(fp, token_buffer);
 			continue;
 		}
 
@@ -64,6 +66,12 @@ void skel_parse(char *fn, Skeleton &skel) {
 			printf("error: command %s not recognized\n", token_buffer[0]);
 		}
 	}
+
+	for (int i = 0; i < skel.n_nodes; i++) {
+		if (isnan(skel.nodes[i].info.rad))
+			printf("%i\n", i);
+	}
+	fclose(fp);
 }
 
 void name(Skeleton &skel, size_t node_num, char *name) {
